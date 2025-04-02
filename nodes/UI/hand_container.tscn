@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://dh1bh8guo6fbg"]
+
+[sub_resource type="GDScript" id="GDScript_22v1m"]
+script/source = "extends Container
+
+@export var arc : float = 45
+@export var radius : int = 200
+@export var step : float = 16
+@onready var point := global_position
+#Called when the node enters the scene tree for the first time.
+func set_up_obj(obj : Node):
+
+	obj.global_position = point
+	obj.position.y = radius
+	obj.position.x = 0
+
+	obj.pivot_offset.y =  radius
+
+
+func _notification(what):
+	match what: 
+		NOTIFICATION_SORT_CHILDREN:
+			var children = get_children()
+			var curr_rotation : float= -1.0 * floor(float(children.size())/2.0) * step
+			print(str(\"~rotation \", curr_rotation, \" num_children \", children.size(), \" step  \", step))
+			for i in children:
+				if i.visible:
+					set_up_obj(i)
+					i.rotation_degrees = curr_rotation
+					curr_rotation += step
+					#print(i.rotation_degrees)
+					#print(i.global_position)
+					print(i.pivot_offset)
+			
+"
+
+[node name="Hand_Container" type="Container"]
+script = SubResource("GDScript_22v1m")

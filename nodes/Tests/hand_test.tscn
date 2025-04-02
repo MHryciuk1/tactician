@@ -1,0 +1,181 @@
+[gd_scene load_steps=5 format=3 uid="uid://duge2p5cf13aj"]
+
+[ext_resource type="PackedScene" uid="uid://dh1bh8guo6fbg" path="res://Nodes/UI/hand_container.tscn" id="1_fghp0"]
+[ext_resource type="PackedScene" uid="uid://dv874f3ia1u8g" path="res://Nodes/UI/Card.tscn" id="2_fe0ef"]
+
+[sub_resource type="GDScript" id="GDScript_ho3oh"]
+script/source = "extends Node2D
+@export var child_scene : PackedScene
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+
+func _on_add_child_pressed():
+	var new_child = child_scene.instantiate()
+	$Hand_Container.add_child(new_child)
+	pass # Replace with function body.
+
+
+func _on_remove_child_pressed():
+	var old_child = $Hand_Container.get_child(0)
+	if old_child != null:
+		old_child.queue_free()
+	#$Hand_Container.queue_sort()
+	pass # Replace with function body.
+
+
+func _on_step_text_submitted(new_text):
+	$Hand_Container.step = float(new_text)
+	$Hand_Container.queue_sort()
+
+
+
+
+
+func _on_radius_drag_ended(value_changed):
+	var new_value = $HBoxContainer/VBoxContainer2/Radius.value
+	$Hand_Container.radius = new_value
+	$HBoxContainer/VBoxContainer2/Label.text = str(\"radius \", new_value)
+	
+	$Hand_Container.queue_sort()
+
+
+func _on_step_drag_ended(value_changed):
+	var new_value = $HBoxContainer/VBoxContainer/Step.value
+	$Hand_Container.step = new_value
+	$HBoxContainer/VBoxContainer/Label.text = str(\"step \", new_value)
+	$Hand_Container.queue_sort()
+
+
+func _on_zoom_drag_ended(value_changed):
+	var new_value = $HBoxContainer/VBoxContainer3/Zoom.value
+	$Camera2D.zoom = Vector2(new_value,new_value)
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_efc0u"]
+script/source = "extends Camera2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="Hand_Test" type="Node2D"]
+script = SubResource("GDScript_ho3oh")
+child_scene = ExtResource("2_fe0ef")
+
+[node name="Hand_Container" parent="." instance=ExtResource("1_fghp0")]
+offset_left = 548.0
+offset_top = 116.0
+offset_right = 548.0
+offset_bottom = 116.0
+arc = 90.0
+
+[node name="Card" parent="Hand_Container" instance=ExtResource("2_fe0ef")]
+layout_mode = 2
+
+[node name="Card2" parent="Hand_Container" instance=ExtResource("2_fe0ef")]
+layout_mode = 2
+
+[node name="Card3" parent="Hand_Container" instance=ExtResource("2_fe0ef")]
+layout_mode = 2
+
+[node name="Card4" parent="Hand_Container" instance=ExtResource("2_fe0ef")]
+layout_mode = 2
+
+[node name="Card5" parent="Hand_Container" instance=ExtResource("2_fe0ef")]
+layout_mode = 2
+
+[node name="Card6" parent="Hand_Container" instance=ExtResource("2_fe0ef")]
+layout_mode = 2
+
+[node name="Card7" parent="Hand_Container" instance=ExtResource("2_fe0ef")]
+layout_mode = 2
+
+[node name="Card8" parent="Hand_Container" instance=ExtResource("2_fe0ef")]
+layout_mode = 2
+
+[node name="Card9" parent="Hand_Container" instance=ExtResource("2_fe0ef")]
+layout_mode = 2
+
+[node name="Card" parent="." instance=ExtResource("2_fe0ef")]
+offset_left = 56.0
+offset_top = 51.0
+offset_right = 160.0
+offset_bottom = 187.0
+pivot_offset = Vector2(0, 50)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(577, 324)
+script = SubResource("GDScript_efc0u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 813.0
+offset_bottom = 43.0
+
+[node name="Add_Child" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "add_child
+"
+
+[node name="Remove_Child" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Remove_child"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Step" type="HSlider" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+max_value = 1000.0
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Step"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Radius" type="HSlider" parent="HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+max_value = 1000.0
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Radius"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Zoom" type="HSlider" parent="HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+max_value = 4.0
+step = 0.1
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Zoom"
+
+[connection signal="pressed" from="HBoxContainer/Add_Child" to="." method="_on_add_child_pressed"]
+[connection signal="pressed" from="HBoxContainer/Remove_Child" to="." method="_on_remove_child_pressed"]
+[connection signal="drag_ended" from="HBoxContainer/VBoxContainer/Step" to="." method="_on_step_drag_ended"]
+[connection signal="drag_ended" from="HBoxContainer/VBoxContainer2/Radius" to="." method="_on_radius_drag_ended"]
+[connection signal="drag_ended" from="HBoxContainer/VBoxContainer3/Zoom" to="." method="_on_zoom_drag_ended"]
