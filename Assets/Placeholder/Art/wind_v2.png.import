@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://wxwd1fdem2v8"
-path="res://.godot/imported/wind_v2.png-c1acdd4fd2805c5383c118460ac422c5.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://Assets/Placeholder/Art/wind_v2.png"
-dest_files=["res://.godot/imported/wind_v2.png-c1acdd4fd2805c5383c118460ac422c5.ctex"]
 
 [params]
 
