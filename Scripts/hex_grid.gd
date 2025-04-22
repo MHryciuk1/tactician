@@ -7,8 +7,10 @@ var curr_hex_set :bool = false
 enum  {
 	CELL_LOCATION = 0,
 	CELL_MOVE_COST = 1,
-	CELL_OCCUPANT = 2
+	CELL_OCCUPANT = 2,
+	CELL_ID = 3
 }
+var pathfinding_graph = AStar2D.new()
 var cell_data : Dictionary = {}
 @export var hover_highlight_color : Color = Color.RED
 @onready var highlight_layer : TileMapLayer = %Highlight_Layer
@@ -23,14 +25,24 @@ func get_cell_data(cord : Vector2i):
 	return cell_data.get(cord)
 func _ready() -> void:
 	var cells = get_used_cells()
+	var to_connect : Array = []
 	for i in cells:
-		insert_to_cell_data([i,1,null], i)
+		var id = pathfinding_graph.get_available_point_id()
+		to_connect.append(id)
+		pathfinding_graph.add_point(id,i,1)
+		insert_to_cell_data([i,1,null, id], i)
 		
 		var text = Label.new()
 		text.text=str("o: ",i,"\na: ", oddr_to_axial(i))
 		text.add_theme_color_override("font_color", Color(0, 0, 0))
 		text.position = map_to_local(i)
 		add_child(text)
+	for i in range(to_connect.size()):
+		var adj := get_surrounding_cells(cells[i])
+		for j in adj:
+			var data = get_cell_data(j)
+			if data:
+				pathfinding_graph.connect_points(to_connect[i],data[CELL_ID])
 	#print(cell_data)
 	#print(get_valid_spaces(Vector2i(1,1),1))
 	
@@ -83,10 +95,27 @@ func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool) -> Array:
 				if with_data:
 					out.append(data)
 				else:
+					print(data[0])
 					out.append(data[0])
 	return out
 
-func get_hexes_along_path_to(unit : Node, cord : Vector2i) -> Array:
+func get_hexes_along_path_to(cord_a : Vector2i, cord_b : Vector2i, data : bool = false) -> Array:
+	var data_a = get_cell_data(cord_a)
+	var data_b = get_cell_data(cord_b)
+	if (not data_a) or (not data_b):
+		print("error in hex_grid.gd/get_hexes_along_path_to: one of the cells don't exist")
+		print(str("cord_a: ", cord_a))
+		print(str("cord_b: ", cord_b))
+		return []
+	var raw_path : PackedVector2Array = pathfinding_graph.get_point_path(data_a[CELL_ID], data_b[CELL_ID])
+	if not data:
+		return raw_path
+	var out : Array = []
+	for i in raw_path:
+		out.append(get_cell_data(i))
+	return out
+func get_all_posible_movement_locations(cord :Vector2i,distance : int) -> Array:
+	
 	return []
 func highlight_hexes(hexes : Array, color : Color) -> void:
 	var erase : = true
