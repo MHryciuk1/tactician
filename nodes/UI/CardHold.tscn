@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cna7bmd25yaqu"]
+[gd_scene load_steps=3 format=3 uid="uid://cna7bmd25yaqu"]
 
 [ext_resource type="Script" uid="uid://br3f6ejy3gpe3" path="res://Scripts/CardHold.gd" id="1_wloms"]
-[ext_resource type="Texture2D" uid="uid://wxwd1fdem2v8" path="res://Assets/Placeholder/Art/wind_v2.png" id="2_0cbre"]
 [ext_resource type="FontFile" uid="uid://dto0eefvqas4a" path="res://Assets/Placeholder/Fonts/munro.ttf" id="3_thqwl"]
 
 [node name="Card" type="Container"]
@@ -15,7 +14,6 @@ script = ExtResource("1_wloms")
 
 [node name="Card_Back" type="TextureRect" parent="."]
 layout_mode = 2
-texture = ExtResource("2_0cbre")
 
 [node name="Card_Effect" type="RichTextLabel" parent="."]
 texture_filter = 4

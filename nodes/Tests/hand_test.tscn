@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://duge2p5cf13aj"]
 
-[ext_resource type="PackedScene" uid="uid://dh1bh8guo6fbg" path="res://Nodes/UI/hand_container.tscn" id="1_fghp0"]
-[ext_resource type="PackedScene" uid="uid://dv874f3ia1u8g" path="res://Nodes/UI/Card.tscn" id="2_fe0ef"]
+[ext_resource type="PackedScene" uid="uid://dh1bh8guo6fbg" path="res://nodes/UI/hand_container.tscn" id="1_fghp0"]
+[ext_resource type="PackedScene" uid="uid://dv874f3ia1u8g" path="res://nodes/UI/Card.tscn" id="2_fe0ef"]
 
 [sub_resource type="GDScript" id="GDScript_ho3oh"]
 script/source = "extends Node2D
