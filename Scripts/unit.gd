@@ -1,3 +1,4 @@
+class_name Unit
 extends Node2D
 
 signal unit_selected(unit)
@@ -9,14 +10,10 @@ signal unit_died(unit)
 
 var logic_manager: Node = null
 var hex_grid: Node = null
+var ui: UIManager = null
 
-var stats = {
-	"cost": 1,
-	"hp": 10,
-	"move_range": 2,
-	"attack_range": 1,
-	"damage": 5,
-	"team": team
+var moves = {
+	"attack1" : attack_effect
 }
 
 var current_cord: Vector2i
@@ -29,17 +26,30 @@ func init(logic_ref: Node, grid_ref: Node, start_cord: Vector2i) -> void:
 	hex_grid.set_node_location(self, start_cord)
 
 func get_stats() -> Dictionary:
-	return stats
+	return {
+	"cost": 1,
+	"hp": 10,
+	"move_range": 2,
+	"attack_range": 1,
+	"damage": 5,
+	"team": team
+}
 
 func check_attack(cord: Vector2i) -> bool:
-	return current_cord.distance_to(cord) <= stats.attack_range
+	return current_cord.distance_to(cord) <= get_stats().attack_range
 
 func attack_effect(target: Node) -> void:
 	pass
 
 func on_attacked(attacker: Node, dmg: int) -> void:
-	stats.hp -= dmg
-	if stats.hp <= 0 and alive:
+	get_stats().hp -= dmg
+	if get_stats().hp <= 0 and alive:
 		alive = false
 		logic_manager.on_unit_death(self)
 		emit_signal("unit_died", self)
+
+func on_click():
+	var valid_moves = hex_grid.get_valid_spaces(current_cord, get_stats().move_range)
+	hex_grid.highlight_hexes(valid_moves, Color.BLUE)
+	ui.send_data("test_ui_id", get_stats(), moves)
+	
