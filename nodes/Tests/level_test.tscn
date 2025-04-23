@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c5rhyur4xs6uf" path="res://Scripts/logic_manager.gd" id="1_8m837"]
 [ext_resource type="Script" uid="uid://cq6xfied52tag" path="res://Scripts/level_test.gd" id="1_45dpy"]
-[ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://Nodes/UI/hex_grid.tscn" id="2_45dpy"]
-[ext_resource type="PackedScene" uid="uid://jvxo8n2p3x3g" path="res://Nodes/UI/moveable_camera.tscn" id="3_wbwiv"]
+[ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://nodes/UI/hex_grid.tscn" id="2_45dpy"]
+[ext_resource type="PackedScene" uid="uid://jvxo8n2p3x3g" path="res://nodes/UI/moveable_camera.tscn" id="3_wbwiv"]
 [ext_resource type="Texture2D" uid="uid://bpqkwmpdm6hn7" path="res://icon.svg" id="4_wbwiv"]
 
 [node name="Level_Test" type="Node2D"]
