@@ -1,6 +1,8 @@
 extends Node2D
 @onready var hex_grid = $Hex_Grid
-
+@export var archer : PackedScene
+func _ready() -> void:
+	var new_
 func _on_highlight_toggled(toggled_on: bool) -> void:
 	var x =$UI/Highlight_Container/X.value
 	var y = $UI/Highlight_Container/Y.value

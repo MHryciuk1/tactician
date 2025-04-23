@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://dtmb83d7ixnbf"]
+[gd_scene load_steps=6 format=4 uid="uid://dtmb83d7ixnbf"]
 
 [ext_resource type="Script" uid="uid://c5rhyur4xs6uf" path="res://Scripts/logic_manager.gd" id="1_8m837"]
 [ext_resource type="Script" uid="uid://cq6xfied52tag" path="res://Scripts/level_test.gd" id="1_45dpy"]
 [ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://Nodes/UI/hex_grid.tscn" id="2_45dpy"]
 [ext_resource type="PackedScene" uid="uid://jvxo8n2p3x3g" path="res://Nodes/UI/moveable_camera.tscn" id="3_wbwiv"]
+[ext_resource type="Texture2D" uid="uid://bpqkwmpdm6hn7" path="res://icon.svg" id="4_wbwiv"]
 
 [node name="Level_Test" type="Node2D"]
 script = ExtResource("1_45dpy")
@@ -19,8 +20,14 @@ tile_map_data = PackedByteArray("AAD///7/AAAAAAAAAAD/////AAAAAAAAAAAAAP7/AAAAAAA
 
 [node name="P1_Units" type="Node" parent="Units"]
 
+[node name="Test_Unit" type="Sprite2D" parent="Units/P1_Units"]
+texture = ExtResource("4_wbwiv")
+
 [node name="P2_Units" type="Node" parent="Units"]
 
 [node name="Moveable_Camera" parent="." instance=ExtResource("3_wbwiv")]
 
 [node name="UI" type="CanvasLayer" parent="."]
+
+[connection signal="cell_left_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_left_clicked"]
+[connection signal="cell_right_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_right_clicked"]
