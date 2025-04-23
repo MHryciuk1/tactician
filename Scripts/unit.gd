@@ -7,13 +7,20 @@ signal unit_died(unit)
 
 @export var team: String = "player"
 @export var unit_type: String = "soldier"
-
+var stats : Dictionary = {
+	"cost": 1,
+	"hp": 10,
+	"move_range": 2,
+	"attack_range": 1,
+	"damage": 5,
+	"team": team
+}
 var logic_manager: Node = null
 var hex_grid: Node = null
 var ui: UIManager = null
 
 var moves = {
-	"attack1" : attack_effect
+	"attack1" : Callable(attack_effect)
 }
 
 var current_cord: Vector2i
@@ -26,22 +33,15 @@ func init(logic_ref: Node, grid_ref: Node, start_cord: Vector2i) -> void:
 	hex_grid.set_node_location(self, start_cord)
 
 func get_stats() -> Dictionary:
-	return {
-	"cost": 1,
-	"hp": 10,
-	"move_range": 2,
-	"attack_range": 1,
-	"damage": 5,
-	"team": team
-}
+	return stats
 
 func check_attack(cord: Vector2i) -> bool:
-	return current_cord.distance_to(cord) <= get_stats().attack_range
+	return current_cord.distance_to(cord) <= get_stats().attack_range #TODO distance_to will not return the number of hexes to the cord
 
-func attack_effect(target: Node) -> void:
+func attack_effect(target: Unit) -> void:
 	pass
 
-func on_attacked(attacker: Node, dmg: int) -> void:
+func on_attacked(attacker: Unit, dmg: int) -> void:
 	get_stats().hp -= dmg
 	if get_stats().hp <= 0 and alive:
 		alive = false
