@@ -15,6 +15,7 @@ var pathfinding_graph = AStar2D.new()
 var cell_data : Dictionary = {}
 @export var hover_highlight_color : Color = Color.RED
 @onready var highlight_layer : TileMapLayer = %Highlight_Layer
+@onready var fog_layer : TileMapLayer = %Fog_Layer
 #kept as a sepreate function to make switching the representation of cell_data easier
 func insert_to_cell_data(data, cord) ->void:
 	
@@ -136,7 +137,12 @@ func highlight_hexes(hexes : Array, color : Color) -> void:
 	if not erase:
 		var data : TileData= highlight_layer.get_cell_tile_data(hexes[0])
 		data.modulate = color
-	pass
+func obscure_hexes(hexes : Array) -> void:
+	for i in hexes:
+		fog_layer.set_cell(i,0, Vector2i(0,0),0)
+func reveal_hexes(hexes : Array) -> void:
+	for i in hexes:
+		fog_layer.erase_cell(i)
 func set_node_location(node : Node2D, cord : Vector2i) -> void :
 	var data = get_cell_data(cord)
 	if not data:
