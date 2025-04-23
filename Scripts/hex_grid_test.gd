@@ -25,3 +25,11 @@ func _on_highlight_path_toggled(toggled_on: bool) -> void:
 			hex_grid.highlight_hexes(hexes,  Color.YELLOW)
 		else:
 			hex_grid.highlight_hexes(hexes,  Color.WHITE)
+
+
+func _on_hex_grid_cell_left_clicked(cell) -> void:
+	print(str("left clicked on ", cell))
+
+
+func _on_hex_grid_cell_right_clicked(cell) -> void:
+	print(str("right clicked on ", cell))

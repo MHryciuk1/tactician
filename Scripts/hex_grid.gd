@@ -2,7 +2,8 @@ extends TileMapLayer
 const tile_size := 128
 var curr_hex := Vector2i(-1,-1)
 var curr_hex_set :bool = false
-
+signal cell_left_clicked
+signal cell_right_clicked
 #could save on some space if i just use a hashmap but this should be slightly faster to access
 enum  {
 	CELL_LOCATION = 0,
@@ -81,6 +82,11 @@ func _input(event: InputEvent) -> void:
 		highlight_layer.set_cell(map_cord,0, Vector2i(0,0),0)
 		curr_hex = map_cord
 		curr_hex_set = true
+	if (event is InputEventMouseButton) and curr_hex_set and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			cell_left_clicked.emit(curr_hex)
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			cell_right_clicked.emit(curr_hex)
 			#if event is InputEventMouseButton:
 func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool) -> Array:
 	var axal_cord :Vector2i= oddr_to_axial(cord)
