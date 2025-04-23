@@ -5,7 +5,7 @@ func _on_highlight_toggled(toggled_on: bool) -> void:
 	var x =$UI/Highlight_Container/X.value
 	var y = $UI/Highlight_Container/Y.value
 	var r = $UI/Highlight_Container/R.value
-	var color : Color =  $Highlight_Container/Color_Picker_Button.color
+	var color : Color =  $UI/Highlight_Container/Color_Picker_Button.color
 	var hexes : Array = hex_grid.get_valid_spaces(Vector2i(x,y),r,false)
 	if(toggled_on):
 		hex_grid.highlight_hexes(hexes,  color)
