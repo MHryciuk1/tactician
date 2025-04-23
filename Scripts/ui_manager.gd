@@ -2,16 +2,16 @@ extends CanvasLayer
 class_name UIManager
 
 
-const UnitIconScene = preload("res://nodes/UI/unit.tscn")
-
-
-func add_unit_icon(cord: Vector2i, hex_grid: Node) -> void:
-	var icon = UnitIconScene.instance()
-	icon.position = hex_grid.to_global( hex_grid.map_to_local(cord) )
-	add_child(icon)
-
-func remove_unit_icon(unit: Node2D) -> void:
-	unit.queue_free()
+#const UnitIconScene = preload("res://nodes/UI/unit.tscn")
+#
+#
+#func add_unit_icon(cord: Vector2i, hex_grid: Node) -> void:
+	#var icon = UnitIconScene.instance()
+	#icon.position = hex_grid.to_global( hex_grid.map_to_local(cord) )
+	#add_child(icon)
+#
+#func remove_unit_icon(unit: Node2D) -> void:
+	#unit.queue_free()
 
 func send_data(ui_id: String, stats: Dictionary, moves: Array) -> void:
 	var panel: Control
