@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqnr58lkjx7uj"]
 
-[ext_resource type="Script" path="res://Scripts/knight.gd" id="1_61ny3"]
+[ext_resource type="Script" uid="uid://bwoqqcoychgmo" path="res://Scripts/knight.gd" id="1_61ny3"]
 [ext_resource type="Texture2D" uid="uid://bpqkwmpdm6hn7" path="res://icon.svg" id="2_gfx4r"]
 
 [node name="Knight" type="Node2D"]
