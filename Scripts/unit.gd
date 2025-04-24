@@ -27,10 +27,12 @@ var moves = {
 var current_cord: Vector2i
 var alive: bool = true
 
-func init(logic_ref: Node, grid_ref: Node, start_cord: Vector2i) -> void:
+func init(logic_ref: Node, grid_ref: Node, ui_ref : Node, start_cord: Vector2i, team_str : String) -> void:
 	logic_manager = logic_ref
+	ui = ui_ref
 	hex_grid = grid_ref
 	current_cord = start_cord
+	team = team_str
 	hex_grid.set_node_location(self, start_cord)
 
 func get_stats() -> Dictionary:
@@ -48,13 +50,14 @@ func attack_effect(target: Unit) -> void:
 func on_attacked(attacker: Node, dmg: int) -> void:
 	stats.hp -= dmg
 	if stats.hp <= 0 and alive:
-
+		print("im dead")
 		alive = false
 		logic_manager.on_unit_death(self)
 		emit_signal("unit_died", self)
 
 func on_click():
-	var valid_moves = hex_grid.get_valid_spaces(current_cord, get_stats().move_range)
+	var valid_moves = hex_grid.get_valid_spaces(current_cord, get_stats().move_range,false)
 	hex_grid.highlight_hexes(valid_moves, Color.BLUE)
-	ui.send_data("test_ui_id", stats, moves)
+	ui.send_data("test_ui_id", stats, moves, self)
+	#send_data(ui_id: String, stats: Dictionary, moves: Array)
 	

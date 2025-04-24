@@ -9,12 +9,24 @@ func _ready() -> void:
 			"damage": 5,
 			"team": team
 		}
+	moves = {
+		"attack1" : {
+			"function" : Callable(attack_effect),
+			"description" : str("range: ", stats.attack_range, "dmg: ", stats.damage),
+			"max_targets" : 1,
+			"min_targets" : 1,
+			"targets_who" : "enemy" 
+			}
+	}
+		
 func attack_effect(target: Unit) -> void:
 	target.on_attacked(target, stats.damage)
 	pass
 
 
 func _on_hitbox_sprite_left_clicked() -> void:
+	print("hi")
+	on_click()
 	pass # Replace with function body.
 func _on_hitbox_sprite_right_clicked() -> void:
-	pass # Replace with function body.
+	pass

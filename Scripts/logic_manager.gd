@@ -1,3 +1,4 @@
+class_name  Logic_Manager
 extends Node
 
 var hex_grid : Node = null
@@ -11,7 +12,7 @@ var p2vision: Array = []
 
 func do_effect(source_unit: Node, effect_function:Callable, targets: Array) -> void:
 	for target in targets:
-		effect_function.call(source_unit, target)
+		effect_function.call( target)
 	# other stuff needs to happen here? like ui updates or something
 
 
@@ -44,7 +45,7 @@ func turn_end() -> void:
 func on_unit_death(unit: Node) -> void:
 	if hex_grid:
 		hex_grid.clear_hex(unit.current_cord)
-	ui.remove_unit_icon(unit)
+	
 	if unit in units:
 		units.erase(unit)
 	unit.queue_free()

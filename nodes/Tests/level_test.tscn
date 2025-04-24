@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://c5rhyur4xs6uf" path="res://Scripts/logic_manager.gd" id="1_8m837"]
 [ext_resource type="Script" uid="uid://cq6xfied52tag" path="res://Scripts/level_test.gd" id="1_45dpy"]
-[ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://nodes/UI/hex_grid.tscn" id="2_45dpy"]
-[ext_resource type="PackedScene" uid="uid://jvxo8n2p3x3g" path="res://nodes/UI/moveable_camera.tscn" id="3_wbwiv"]
-[ext_resource type="Texture2D" uid="uid://bpqkwmpdm6hn7" path="res://icon.svg" id="4_wbwiv"]
+[ext_resource type="PackedScene" uid="uid://iclbvx22a456" path="res://Nodes/Units/archer_unit.tscn" id="2_18wxx"]
+[ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://Nodes/UI/hex_grid.tscn" id="2_45dpy"]
+[ext_resource type="PackedScene" uid="uid://jvxo8n2p3x3g" path="res://Nodes/UI/moveable_camera.tscn" id="3_wbwiv"]
 [ext_resource type="Script" uid="uid://dxk5qf2akgabk" path="res://Scripts/ui_manager.gd" id="5_t1dee"]
 
 [node name="Level_Test" type="Node2D"]
 script = ExtResource("1_45dpy")
+archer = ExtResource("2_18wxx")
 
 [node name="Logic_Manager" type="Node" parent="."]
 script = ExtResource("1_8m837")
@@ -21,9 +22,6 @@ tile_map_data = PackedByteArray("AAD///7/AAAAAAAAAAD/////AAAAAAAAAAAAAP7/AAAAAAA
 
 [node name="P1_Units" type="Node" parent="Units"]
 
-[node name="Test_Unit" type="Sprite2D" parent="Units/P1_Units"]
-texture = ExtResource("4_wbwiv")
-
 [node name="P2_Units" type="Node" parent="Units"]
 
 [node name="Moveable_Camera" parent="." instance=ExtResource("3_wbwiv")]
@@ -31,28 +29,66 @@ texture = ExtResource("4_wbwiv")
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("5_t1dee")
 
-[node name="MoveOptions" type="VBoxContainer" parent="UI"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="TurnPanel" type="PanelContainer" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -78.0
+offset_top = -85.0
+grow_horizontal = 0
+grow_vertical = 0
 
-[node name="TurnPanel" type="Panel" parent="UI"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/TurnPanel"]
+layout_mode = 2
 
-[node name="TurnLabel" type="Label" parent="UI/TurnPanel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="TurnLabel" type="Label" parent="UI/TurnPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="PlayerLabel" type="Label" parent="UI/TurnPanel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="PlayerLabel" type="Label" parent="UI/TurnPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="EndTurnButton" type="Button" parent="UI/TurnPanel"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="EndTurnButton" type="Button" parent="UI/TurnPanel/VBoxContainer"]
+layout_mode = 2
+text = "End Turn"
+
+[node name="Move_Options_Container" type="PanelContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="MoveOptions" type="VBoxContainer" parent="UI/Move_Options_Container"]
+layout_mode = 2
+
+[node name="Confirm_Container" type="PanelContainer" parent="UI"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.5
+offset_top = -40.0
+offset_right = 35.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Confirm_Container"]
+layout_mode = 2
+
+[node name="Confirm" type="Button" parent="UI/Confirm_Container/HBoxContainer"]
+layout_mode = 2
+text = "Confirm"
+
+[node name="Cancel" type="Button" parent="UI/Confirm_Container/HBoxContainer"]
+layout_mode = 2
 
 [connection signal="cell_left_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_left_clicked"]
 [connection signal="cell_right_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_right_clicked"]
+[connection signal="pressed" from="UI/TurnPanel/VBoxContainer/EndTurnButton" to="UI" method="_on_end_turn_button_pressed"]
+[connection signal="pressed" from="UI/Confirm_Container/HBoxContainer/Confirm" to="UI" method="_on_confirm_pressed"]
+[connection signal="pressed" from="UI/Confirm_Container/HBoxContainer/Cancel" to="UI" method="_on_cancel_pressed"]

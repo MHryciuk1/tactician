@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=4 uid="uid://besdj4bfguww2"]
 
 [ext_resource type="Script" uid="uid://dvgt5e6kc74r8" path="res://Scripts/unit_test.gd" id="1_1l0ql"]
-[ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://nodes/UI/hex_grid.tscn" id="2_lxdcs"]
-[ext_resource type="PackedScene" uid="uid://cqnr58lkjx7uj" path="res://nodes/UI/Knight.tscn" id="2_m6yub"]
+[ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://Nodes/UI/hex_grid.tscn" id="2_lxdcs"]
+[ext_resource type="PackedScene" uid="uid://cqnr58lkjx7uj" path="res://Nodes/UI/Knight.tscn" id="2_m6yub"]
 [ext_resource type="Script" uid="uid://c5rhyur4xs6uf" path="res://Scripts/logic_manager.gd" id="3_lxdcs"]
 
 [node name="UnitTest" type="Node2D"]
