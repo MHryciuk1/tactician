@@ -1,14 +1,14 @@
-class_name Archer
+class_name Scout
 extends Unit
 func _ready() -> void:
 	stats = {
-			"cost": 1,
-			"hp": 10,
-			"move_range": 1,
-			"attack_range": 3,
-			"damage": 5,
+			"cost": 2,
+			"hp": 8,
+			"move_range": 3,
+			"attack_range": 1,
+			"damage": 2,
 			"team": team,
-			"vision_range": 5
+			"vision_range" : 10
 		}
 	moves = {
 		"attack1" : {
