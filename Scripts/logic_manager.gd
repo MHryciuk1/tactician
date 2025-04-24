@@ -3,6 +3,11 @@ extends Node
 var hex_grid : Node = null
 var units : Array = []
 var ui : UIManager = null
+var turn_number: int = 1
+var current_player: int = 1
+var p1vision: Array = []
+var p2vision: Array = []
+
 
 func do_effect(source_unit: Node, effect_function:Callable, targets: Array) -> void:
 	for target in targets:
@@ -17,6 +22,7 @@ func move_to(unit: Node, target_cord: Vector2) -> void:
 		return
 	hex_grid.set_node_location(unit, target_cord)
 	unit.current_cord = target_cord
+	#need to update vision arrays and update fog based on where unit is moved to
 	print(unit.unit_type, "moved to: ", target_cord)
 
 
@@ -28,8 +34,10 @@ func can_move_to(unit: Node, target_cord: Vector2) -> bool:
 
 
 func turn_end() -> void:
-	#need to decide what happens here
-	print("Turn ended.")
+	current_player = 3 - current_player
+	turn_number += 1
+	#need to turn all hexes except those in current player's vision to fog
+	#also need to reset all unit's movement numbers
 
 
 
