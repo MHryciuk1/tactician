@@ -23,7 +23,12 @@ func move_to(unit: Node, target_cord: Vector2) -> void:
 		return
 	hex_grid.set_node_location(unit, target_cord)
 	unit.current_cord = target_cord
-	#need to update vision arrays and update fog based on where unit is moved to
+	#update vision
+	var cur_vision = hex_grid.get_valid_spaces(unit.current_cord, unit.get_stats().vision_range)
+	hex_grid.obscure_hexes(cur_vision) # this doesn't fully work but can fix later
+	var target_vision = hex_grid.get_valid_spaces(target_cord, unit.get_stats().vision_range)
+	hex_grid.reveal_hexes(target_vision)
+	
 	print(unit.unit_type, "moved to: ", target_cord)
 
 
@@ -37,6 +42,8 @@ func can_move_to(unit: Node, target_cord: Vector2) -> bool:
 func turn_end() -> void:
 	current_player = 3 - current_player
 	turn_number += 1
+	hex_grid.obscure_hexes(p1vision)
+	hex_grid.reveal_hexes(p2vision)
 	#need to turn all hexes except those in current player's vision to fog
 	#also need to reset all unit's movement numbers
 

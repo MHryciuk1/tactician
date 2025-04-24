@@ -13,6 +13,7 @@ var stats : Dictionary = {
 	"move_range": 2,
 	"attack_range": 1,
 	"damage": 5,
+	"vision_range": 2,
 	"team": team
 }
 var logic_manager: Node = null
