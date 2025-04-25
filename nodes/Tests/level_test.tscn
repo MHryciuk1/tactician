@@ -1,14 +1,17 @@
-[gd_scene load_steps=7 format=4 uid="uid://dtmb83d7ixnbf"]
+[gd_scene load_steps=8 format=4 uid="uid://dtmb83d7ixnbf"]
 
 [ext_resource type="Script" uid="uid://c5rhyur4xs6uf" path="res://Scripts/logic_manager.gd" id="1_8m837"]
 [ext_resource type="Script" uid="uid://cq6xfied52tag" path="res://Scripts/level_test.gd" id="1_45dpy"]
 [ext_resource type="PackedScene" uid="uid://iclbvx22a456" path="res://Nodes/Units/archer_unit.tscn" id="2_18wxx"]
+[ext_resource type="PackedScene" uid="uid://cqnr58lkjx7uj" path="res://Nodes/UI/Knight.tscn" id="2_35r2b"]
 [ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://Nodes/UI/hex_grid.tscn" id="2_45dpy"]
 [ext_resource type="PackedScene" uid="uid://jvxo8n2p3x3g" path="res://Nodes/UI/moveable_camera.tscn" id="3_wbwiv"]
 [ext_resource type="Script" uid="uid://dxk5qf2akgabk" path="res://Scripts/ui_manager.gd" id="5_t1dee"]
 
 [node name="Level_Test" type="Node2D"]
 script = ExtResource("1_45dpy")
+knight = ExtResource("2_35r2b")
+scout = ExtResource("2_35r2b")
 archer = ExtResource("2_18wxx")
 
 [node name="Logic_Manager" type="Node" parent="."]
@@ -92,8 +95,42 @@ text = "Confirm"
 layout_mode = 2
 text = "Cancel"
 
+[node name="Unit_Placement_Panel" type="PanelContainer" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.935
+anchor_top = 0.389
+anchor_right = 0.935
+anchor_bottom = 0.389
+offset_left = -143.12
+offset_top = -250.072
+offset_right = 71.8799
+offset_bottom = -141.072
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Unit_Placement_Panel"]
+layout_mode = 2
+
+[node name="Knight" type="Button" parent="UI/Unit_Placement_Panel/VBoxContainer"]
+layout_mode = 2
+text = "Knight"
+
+[node name="Scout" type="Button" parent="UI/Unit_Placement_Panel/VBoxContainer"]
+layout_mode = 2
+text = "Scout"
+
+[node name="Archer" type="Button" parent="UI/Unit_Placement_Panel/VBoxContainer"]
+layout_mode = 2
+text = "Archer"
+
+[node name="End Turn" type="Button" parent="UI/Unit_Placement_Panel/VBoxContainer"]
+layout_mode = 2
+text = "Finish Placement"
+
 [connection signal="cell_left_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_left_clicked"]
 [connection signal="cell_right_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_right_clicked"]
 [connection signal="pressed" from="UI/TurnPanel/VBoxContainer/EndTurnButton" to="UI" method="_on_end_turn_button_pressed"]
 [connection signal="pressed" from="UI/Confirm_Container/HBoxContainer/Confirm" to="UI" method="_on_confirm_pressed"]
 [connection signal="pressed" from="UI/Confirm_Container/HBoxContainer/Cancel" to="UI" method="_on_cancel_pressed"]
+[connection signal="pressed" from="UI/Unit_Placement_Panel/VBoxContainer/Knight" to="." method="_on_knight_pressed"]
+[connection signal="pressed" from="UI/Unit_Placement_Panel/VBoxContainer/Scout" to="." method="_on_scout_pressed"]
+[connection signal="pressed" from="UI/Unit_Placement_Panel/VBoxContainer/Archer" to="." method="_on_archer_pressed"]
+[connection signal="pressed" from="UI/Unit_Placement_Panel/VBoxContainer/End Turn" to="." method="_on_end_turn_pressed"]

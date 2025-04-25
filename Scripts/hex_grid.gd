@@ -114,7 +114,7 @@ func _input(event: InputEvent) -> void:
 			
 			cell_right_clicked.emit(curr_hex)
 			#if event is InputEventMouseButton:
-func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool) -> Array:
+func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool = false) -> Array:
 	var axal_cord :Vector2i= oddr_to_axial(cord)
 	var N = abs(radius)
 	var out : Array = []

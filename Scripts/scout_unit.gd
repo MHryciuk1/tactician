@@ -1,14 +1,14 @@
-class_name Archer
+class_name Scout
 extends Unit
 func _ready() -> void:
 	stats = {
-			"cost": 1,
-			"hp": 10,
-			"move_range": 1,
-			"attack_range": 3,
-			"damage": 5,
+			"cost": 2,
+			"hp": 8,
+			"move_range": 3,
+			"attack_range": 1,
+			"damage": 2,
 			"team": team,
-			"vision_range": 5
+			"vision_range" : 10
 		}
 	moves = {
 		"attack1" : {
@@ -16,9 +16,7 @@ func _ready() -> void:
 			"description" : str("range: ", stats.attack_range, "dmg: ", stats.damage),
 			"max_targets" : 1,
 			"min_targets" : 1,
-			"targets_who" : "enemy", 
-			"max_uses_per_turn": 1,
-			"uses_left" : 1
+			"targets_who" : "enemy" 
 			}
 	}
 		
