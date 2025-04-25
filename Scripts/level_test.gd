@@ -6,19 +6,24 @@ extends Node2D
 @onready var p2_units =$Units/P2_Units
 @export var archer : PackedScene
 func _ready() -> void:
-	ui.init(logic_manager)
+	ui.init(logic_manager, grid)
+	logic_manager.init(grid, ui)
 	
 	var test_unit = archer.instantiate()
-	test_unit.init(logic_manager, grid, ui, Vector2i(-1,-1), "player1")
+	test_unit.init(logic_manager, grid, ui, Vector2i(-1,-1), 1)
 	p1_units.add_child(test_unit)
 	var test_unit2 = archer.instantiate()
-	test_unit2.init(logic_manager, grid, ui, Vector2i(0,-2), "player2")
+	test_unit2.init(logic_manager, grid, ui, Vector2i(0,-2), 2)
 	p2_units.add_child(test_unit2)
 	pass
 	
-func _on_hex_grid_cell_left_clicked() -> void:
-	pass # Replace with function body.
+func _on_hex_grid_cell_left_clicked(hex : Vector2i) -> void:
+	ui.show_hex_data(hex)
+	if grid.line_drawing_mode:
+		logic_manager.move_to(ui.move_source,hex)
 
 
-func _on_hex_grid_cell_right_clicked() -> void:
+func _on_hex_grid_cell_right_clicked(hex : Vector2i) -> void:
+	
+	grid.disable_line_drawing_mode()
 	pass # Replace with function body.

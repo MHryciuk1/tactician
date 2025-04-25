@@ -1,3 +1,4 @@
+class_name Hex_Grid
 extends TileMapLayer
 const tile_size := 128
 var curr_hex := Vector2i(-1,-1)
@@ -16,13 +17,23 @@ var cell_data : Dictionary = {}
 @export var hover_highlight_color : Color = Color.RED
 @onready var highlight_layer : TileMapLayer = %Highlight_Layer
 @onready var fog_layer : TileMapLayer = %Fog_Layer
+@onready var line : Line2D = %Line
+var line_drawing_mode : bool = false
+var line_source : Unit
 #kept as a sepreate function to make switching the representation of cell_data easier
+func enable_line_drawing_mode(source : Unit) -> void:
+	line_source = source
+	line_drawing_mode = true 
+func disable_line_drawing_mode() -> void:
+	line_drawing_mode = false
+	line.hide() 
 func insert_to_cell_data(data, cord) ->void:
 	
 	cell_data[cord] = data
 	#cell_data[cord.x][cord.y] = data
 	#print(cell_data[cord.x][cord.y])
 	#pass
+
 func get_cell_data(cord : Vector2i):
 	return cell_data.get(cord)
 func _ready() -> void:
@@ -70,23 +81,37 @@ func oddr_to_axial(oddr_cord : Vector2i) -> Vector2i:
 	#var angle_deg = 60 * i - 30
 	#var angle_rad = PI / 180 * angle_deg
 	#return Vector2(center.x + size *cos(angle_rad),center.y + size * sin(angle_rad))
+func draw_line_on_grid(source : Vector2i, dest : Vector2i) -> void:
+	#print(get_hexes_along_path_to(source, dest, false))
+	#print(str("s: ", source, "d ", dest))
+	line.points = get_hexes_along_path_to(source, dest, false).map(Callable(map_to_local))
+	
+	line.show()
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		var mouse_position := get_local_mouse_position()
 		var map_cord := local_to_map(mouse_position)
+		var should_draw_line : bool = false
 		if not map_cord in get_used_cells():
 			curr_hex_set = false
 			highlight_layer.erase_cell(curr_hex)
 			return
+			
 		if curr_hex_set and (map_cord !=curr_hex):
 			highlight_layer.erase_cell(curr_hex)
+			if line_drawing_mode:
+				should_draw_line = true
+			
 		highlight_layer.set_cell(map_cord,0, Vector2i(0,0),0)
 		curr_hex = map_cord
 		curr_hex_set = true
+		if should_draw_line:
+			draw_line_on_grid(line_source.current_cord,curr_hex)
 	if (event is InputEventMouseButton) and curr_hex_set and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			cell_left_clicked.emit(curr_hex)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			
 			cell_right_clicked.emit(curr_hex)
 			#if event is InputEventMouseButton:
 func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool) -> Array:
@@ -106,7 +131,7 @@ func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool) -> Array:
 					out.append(data[0])
 	return out
 
-func get_hexes_along_path_to(cord_a : Vector2i, cord_b : Vector2i, data : bool = false) -> Array:
+func get_hexes_along_path_to(cord_a : Vector2i, cord_b : Vector2i, data : bool = false, partial_path : bool = false) -> Array:
 	var data_a = get_cell_data(cord_a)
 	var data_b = get_cell_data(cord_b)
 	if (not data_a) or (not data_b):
@@ -114,7 +139,7 @@ func get_hexes_along_path_to(cord_a : Vector2i, cord_b : Vector2i, data : bool =
 		print(str("cord_a: ", cord_a))
 		print(str("cord_b: ", cord_b))
 		return []
-	var raw_path : PackedVector2Array = pathfinding_graph.get_point_path(data_a[CELL_ID], data_b[CELL_ID])
+	var raw_path : PackedVector2Array = pathfinding_graph.get_point_path(data_a[CELL_ID], data_b[CELL_ID], partial_path)
 	if not data:
 		return raw_path
 	var out : Array = []

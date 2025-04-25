@@ -80,12 +80,17 @@ grow_vertical = 0
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Confirm_Container"]
 layout_mode = 2
 
+[node name="Progress" type="Label" parent="UI/Confirm_Container/HBoxContainer"]
+layout_mode = 2
+text = "0/0"
+
 [node name="Confirm" type="Button" parent="UI/Confirm_Container/HBoxContainer"]
 layout_mode = 2
 text = "Confirm"
 
 [node name="Cancel" type="Button" parent="UI/Confirm_Container/HBoxContainer"]
 layout_mode = 2
+text = "Cancel"
 
 [connection signal="cell_left_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_left_clicked"]
 [connection signal="cell_right_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_right_clicked"]
