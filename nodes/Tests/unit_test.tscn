@@ -1,13 +1,29 @@
-[gd_scene load_steps=5 format=4 uid="uid://besdj4bfguww2"]
+[gd_scene load_steps=7 format=4 uid="uid://besdj4bfguww2"]
 
 [ext_resource type="Script" uid="uid://dvgt5e6kc74r8" path="res://Scripts/unit_test.gd" id="1_1l0ql"]
 [ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://Nodes/UI/hex_grid.tscn" id="2_lxdcs"]
-[ext_resource type="PackedScene" uid="uid://cqnr58lkjx7uj" path="res://Nodes/UI/Knight.tscn" id="2_m6yub"]
+[ext_resource type="Texture2D" uid="uid://cl5qjdvd2ag8c" path="res://Assets/Placeholder/Art/knight-sprite.png" id="2_nplvu"]
 [ext_resource type="Script" uid="uid://c5rhyur4xs6uf" path="res://Scripts/logic_manager.gd" id="3_lxdcs"]
+
+[sub_resource type="Resource" id="Resource_2gd1f"]
+metadata/__load_path__ = "res://Scripts/knight.gd"
+
+[sub_resource type="PackedScene" id="PackedScene_odoe3"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("Knight", "Node2D", "script", "Sprite2D", "Sprite2D", "texture"),
+"node_count": 2,
+"node_paths": [NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 1, 2, 0, 0, 1073741824, 0, 4, 3, -1, 1, 5, 1, 0),
+"variants": [SubResource("Resource_2gd1f"), ExtResource("2_nplvu")],
+"version": 3
+}
 
 [node name="UnitTest" type="Node2D"]
 script = ExtResource("1_1l0ql")
-knight_scene = ExtResource("2_m6yub")
+knight_scene = SubResource("PackedScene_odoe3")
 
 [node name="Hex_Grid" parent="." instance=ExtResource("2_lxdcs")]
 tile_map_data = PackedByteArray("AAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAIAAAAAAAAAAAACAAIAAAAAAAAAAAD//wEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAAAAAAAAAAAAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAA=")

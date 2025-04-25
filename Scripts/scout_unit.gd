@@ -16,7 +16,9 @@ func _ready() -> void:
 			"description" : str("range: ", stats.attack_range, "dmg: ", stats.damage),
 			"max_targets" : 1,
 			"min_targets" : 1,
-			"targets_who" : "enemy" 
+			"targets_who" : "enemy",
+			"max_uses_per_turn": 1,
+			"uses_left" : 1,
 			}
 	}
 		

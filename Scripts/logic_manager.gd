@@ -18,7 +18,6 @@ func do_effect(source_unit: Node, effect_function:Callable, targets: Array) -> v
 		effect_function.call( target)
 	# other stuff needs to happen here? like ui updates or something
 
-
 func move_to(unit: Unit, target_cord: Vector2i) -> void:
 	var path = hex_grid.get_hexes_along_path_to(unit.current_cord, target_cord)
 	var actual_target  : Vector2i= path.pop_front()
@@ -35,7 +34,13 @@ func move_to(unit: Unit, target_cord: Vector2i) -> void:
 	if unit.current_cord == actual_target:
 		print("No movement possible for ", unit.unit_type)
 		return
+	var cur_vision = hex_grid.get_valid_spaces(unit.current_cord, unit.get_stats().vision_range)
+	hex_grid.obscure_hexes(cur_vision) # this doesn't fully work but can fix later
+	var target_vision = hex_grid.get_valid_spaces(actual_target, unit.get_stats().vision_range)
+	hex_grid.reveal_hexes(target_vision)
 	hex_grid.set_node_location(unit, actual_target)
+	
+	
 	unit.current_cord = actual_target
 	hex_grid.draw_line_on_grid(actual_target, hex_grid.curr_hex)
 	#need to update vision arrays and update fog based on where unit is moved to
@@ -44,10 +49,7 @@ func move_to(unit: Unit, target_cord: Vector2i) -> void:
 	#hex_grid.set_node_location(unit, target_cord)
 	#unit.current_cord = target_cord
 	##update vision
-	var cur_vision = hex_grid.get_valid_spaces(unit.current_cord, unit.get_stats().vision_range)
-	hex_grid.obscure_hexes(cur_vision) # this doesn't fully work but can fix later
-	var target_vision = hex_grid.get_valid_spaces(target_cord, unit.get_stats().vision_range)
-	hex_grid.reveal_hexes(target_vision)
+	
 	#
 	#print(unit.unit_type, "moved to: ", target_cord)
 

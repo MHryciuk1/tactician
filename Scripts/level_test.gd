@@ -12,20 +12,41 @@ func _ready() -> void:
 
 	ui.init(logic_manager, grid)
 	logic_manager.init(grid, ui)
-	
-	var test_unit = archer.instantiate()
-	test_unit.init(logic_manager, grid, ui, Vector2i(-1,-1), 1)
-	p1_units.add_child(test_unit)
-	var test_unit2 = archer.instantiate()
-	test_unit2.init(logic_manager, grid, ui, Vector2i(0,-2), 2)
-	p2_units.add_child(test_unit2)
+	#var test_unit = archer.instantiate()
+	#test_unit.init(logic_manager, grid, ui, Vector2i(-1,-1), 1)
+	#p1_units.add_child(test_unit)
+	#var test_unit2 = archer.instantiate()
+	#test_unit2.init(logic_manager, grid, ui, Vector2i(0,-2), 2)
+	#p2_units.add_child(test_unit2)
 	pass
-	
+func selection_handler(hex : Vector2i) -> void:
+	var new_unit : Unit= null
+	if knight_selected:
+		new_unit = knight.instantiate()
+	if archer_selected:
+		new_unit = archer.instantiate()
+	if scout_selected:
+		new_unit = scout.instantiate()
+	if new_unit != null:
+		new_unit.init(logic_manager, grid, ui, hex, logic_manager.current_player)
+		if logic_manager.current_player == 1:
+			p1_units.add_child(new_unit)
+		elif logic_manager.current_player == 2:
+			p2_units.add_child(new_unit)
+		archer_selected = false
+		scout_selected = false
+		knight_selected = false
 func _on_hex_grid_cell_left_clicked(hex : Vector2i) -> void:
+	if archer_selected or scout_selected or knight_selected:
+		selection_handler(hex)
+		return
 	ui.show_hex_data(hex)
 	if grid.line_drawing_mode:
 		logic_manager.move_to(ui.move_source,hex)
 
+	print("left clicked")
+	
+			
 	
 	
 	#var test_unit = archer.instantiate()
@@ -36,23 +57,7 @@ func _on_hex_grid_cell_left_clicked(hex : Vector2i) -> void:
 	#p2_units.add_child(test_unit2)
 	
 	
-#func _on_hex_grid_cell_left_clicked(curr_hex) -> void:
-	#print("left clicked")
-	#print(curr_hex)
-	#var new_unit = null
-	#if knight_selected:
-		#new_unit = knight.instantiate()
-	#if archer_selected:
-		#new_unit = archer.instantiate()
-	#if scout_selected:
-		#new_unit = scout.instantiate()
-	#if new_unit != null:
-		#if logic_manager.current_player == 1:	
-			#new_unit.init(logic_manager, grid, ui, curr_hex, "player1")
-			#p1_units.add_child(new_unit)
-		#else:
-			#new_unit.init(logic_manager, grid, ui, curr_hex, "player2")
-			#p2_units.add_child(new_unit)
+
 
 
 
@@ -65,7 +70,6 @@ var knight_selected = false
 var scout_selected = false
 var archer_selected = false
 func _on_knight_pressed() -> void:
-	print("knight pressed")
 	knight_selected = true
 	scout_selected = false
 	archer_selected = false

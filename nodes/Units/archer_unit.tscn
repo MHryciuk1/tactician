@@ -8,7 +8,13 @@
 script = ExtResource("1_ff1gg")
 
 [node name="Hitbox" parent="." instance=ExtResource("2_ff1gg")]
+
+[node name="Sprite2D" parent="Hitbox" index="1"]
+position = Vector2(1, -0.499995)
+scale = Vector2(1.96875, 1.95313)
 texture = ExtResource("3_lj6fr")
 
 [connection signal="sprite_left_clicked" from="Hitbox" to="." method="_on_hitbox_sprite_left_clicked"]
 [connection signal="sprite_right_clicked" from="Hitbox" to="." method="_on_hitbox_sprite_right_clicked"]
+
+[editable path="Hitbox"]
