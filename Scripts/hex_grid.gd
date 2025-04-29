@@ -16,6 +16,7 @@ var pathfinding_graph = AStar2D.new()
 var cell_data : Dictionary = {}
 @export var hover_highlight_color : Color = Color.RED
 @onready var highlight_layer : TileMapLayer = %Highlight_Layer
+@onready var mouse_highlight_layer : TileMapLayer = %Mouse_Highlight_Layer
 @onready var fog_layer : TileMapLayer = %Fog_Layer
 @onready var line : Line2D = %Line
 var line_drawing_mode : bool = false
@@ -94,15 +95,15 @@ func _input(event: InputEvent) -> void:
 		var should_draw_line : bool = false
 		if not map_cord in get_used_cells():
 			curr_hex_set = false
-			highlight_layer.erase_cell(curr_hex)
+			mouse_highlight_layer.erase_cell(curr_hex)
 			return
 			
 		if curr_hex_set and (map_cord !=curr_hex):
-			highlight_layer.erase_cell(curr_hex)
+			mouse_highlight_layer.erase_cell(curr_hex)
 			if line_drawing_mode:
 				should_draw_line = true
 			
-		highlight_layer.set_cell(map_cord,0, Vector2i(0,0),0)
+		mouse_highlight_layer.set_cell(map_cord,0, Vector2i(0,0),0)
 		curr_hex = map_cord
 		curr_hex_set = true
 		if should_draw_line:
@@ -113,7 +114,11 @@ func _input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			
 			cell_right_clicked.emit(curr_hex)
-			#if event is InputEventMouseButton:
+		#if event is InputEventMouseButton:
+func hex_ocupied(hex : Vector2i) -> bool:
+	if get_cell_data(hex)[CELL_OCCUPANT]:
+		return true
+	return false
 func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool = false) -> Array:
 	var axal_cord :Vector2i= oddr_to_axial(cord)
 	var N = abs(radius)
@@ -150,6 +155,7 @@ func get_all_posible_movement_locations(cord :Vector2i,distance : int) -> Array:
 	
 	return []
 func highlight_hexes(hexes : Array, color : Color) -> void:
+	highlight_layer.clear()
 	var erase : = true
 	if color != Color.WHITE:
 		erase = false
@@ -175,7 +181,8 @@ func set_node_location(node : Node2D, cord : Vector2i) -> void :
 		return
 	node.global_position = to_global(map_to_local(cord))
 	data[CELL_OCCUPANT] = node
-	
+func set_hex_empty(hex : Vector2i) -> void:
+	get_cell_data(hex)[CELL_OCCUPANT] =  null
 func clear_hex(cord : Vector2i) -> void:
 	var data = get_cell_data(cord)
 	if not data:

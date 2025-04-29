@@ -21,7 +21,11 @@ var logic_manager: Node = null
 var hex_grid: Node = null
 var ui  = null
 
-
+func turn_end() -> void:
+	stats.move_range = stats.max_move_range
+	for i in moves.keys():
+		var move = moves.get(i)
+		move.uses_left = move.max_uses_per_turn
 var moves = {
 	"attack1" : Callable(attack_effect)
 }
@@ -58,7 +62,7 @@ func on_attacked(attacker: Node, dmg: int) -> void:
 		emit_signal("unit_died", self)
 
 func on_click():
-	var valid_moves = hex_grid.get_valid_spaces(current_cord, get_stats().move_range,false)
+	var valid_moves = hex_grid.get_valid_spaces(current_cord, get_stats().attack_range,false)
 	hex_grid.highlight_hexes(valid_moves, Color.BLUE)
 	ui.send_data("test_ui_id", stats, moves, self)
 	#send_data(ui_id: String, stats: Dictionary, moves: Array)

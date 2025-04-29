@@ -56,19 +56,25 @@ func show_redacted_info(ui_id: String, stats: Dictionary, moves: Dictionary, sou
 func handle_targeting(source : Unit) -> void:
 	if curr_move.targets_who == "enemy": #TODO other posible values
 			if(source.team != curr_move_alignment):
-				if curr_targets.size() < curr_move.max_targets:
+				if (curr_targets.size() < curr_move.max_targets) and (source.current_cord in grid.get_valid_spaces(move_source.current_cord,move_source.get_stats().attack_range)):
 					print("here")
 					curr_targets.append(source)
 					confirm_container_progress.text = str(curr_targets.size(),"/",curr_move.max_targets, "minimum selection: ", curr_move.min_targets)
-func handle_movement(source : Unit) -> void:
+				else:
+					print("invalid_target")
+func enable_movement(source : Unit) -> void:
 	if(source.team == lm.current_player) :
 		move_source = source
 		grid.enable_line_drawing_mode(source)
+func disable_movement() -> void:
+	grid.disable_line_drawing_mode()
 func send_data(ui_id: String, stats: Dictionary, moves: Dictionary, source : Unit) -> void:
+	if(not lm.actions_enabled):
+		return
 	if(selection_mode_on) :
 		handle_targeting(source)
 	else :
-		handle_movement(source)
+		enable_movement(source)
 	if lm.current_player == source.team:
 		show_full_info(ui_id, stats, moves, source)
 	else:
@@ -94,8 +100,7 @@ func cancel_selection_mode():
 
 
 func _on_end_turn_button_pressed() -> void:
-	pass # Replace with function body.
-
+	lm.turn_end()
 
 func _on_confirm_pressed() -> void:
 	print(curr_targets)

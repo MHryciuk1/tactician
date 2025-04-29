@@ -1,6 +1,6 @@
 class_name  Logic_Manager
 extends Node
-
+var unit_containers : Array = []
 var hex_grid : Hex_Grid = null
 var units : Array = []
 var ui : UIManager = null
@@ -8,8 +8,10 @@ var turn_number: int = 1
 var current_player: int = 1
 var p1vision: Array = []
 var p2vision: Array = []
+var actions_enabled : bool = false
 
-func init(hex_grid_ref : Hex_Grid, ui_ref : UIManager) -> void:
+func init(hex_grid_ref : Hex_Grid, ui_ref : UIManager, containers : Array) -> void:
+	unit_containers = containers
 	hex_grid = hex_grid_ref
 	ui = ui_ref
 	
@@ -38,6 +40,7 @@ func move_to(unit: Unit, target_cord: Vector2i) -> void:
 	hex_grid.obscure_hexes(cur_vision) # this doesn't fully work but can fix later
 	var target_vision = hex_grid.get_valid_spaces(actual_target, unit.get_stats().vision_range)
 	hex_grid.reveal_hexes(target_vision)
+	hex_grid.set_hex_empty(unit.current_cord)
 	hex_grid.set_node_location(unit, actual_target)
 	
 	
@@ -66,8 +69,15 @@ func can_move_to(unit: Unit, target_cord: Vector2i) -> bool:
 func turn_end() -> void:
 	current_player = 3 - current_player
 	turn_number += 1
+	
+	for i in unit_containers[current_player-1].get_children():
+		i.turn_end()
+	
 	hex_grid.obscure_hexes(p1vision)
 	hex_grid.reveal_hexes(p2vision)
+	ui._update_turn_display(turn_number,current_player)
+	ui.disable_movement()
+	ui.cancel_selection_mode()
 	#need to turn all hexes except those in current player's vision to fog
 	#also need to reset all unit's movement numbers
 

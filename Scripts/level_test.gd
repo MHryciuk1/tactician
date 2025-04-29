@@ -11,9 +11,9 @@ extends Node2D
 func _ready() -> void:
 
 	ui.init(logic_manager, grid)
-	logic_manager.init(grid, ui)
+	logic_manager.init(grid, ui, [p1_units,p2_units])
 	#var test_unit = archer.instantiate()
-	#test_unit.init(logic_manager, grid, ui, Vector2i(-1,-1), 1)
+	#test_unit.init(logiac_manager, grid, ui, Vector2i(-1,-1), 1)
 	#p1_units.add_child(test_unit)
 	#var test_unit2 = archer.instantiate()
 	#test_unit2.init(logic_manager, grid, ui, Vector2i(0,-2), 2)
@@ -41,7 +41,7 @@ func _on_hex_grid_cell_left_clicked(hex : Vector2i) -> void:
 		selection_handler(hex)
 		return
 	ui.show_hex_data(hex)
-	if grid.line_drawing_mode:
+	if (grid.line_drawing_mode) and (not ui.selection_mode_on) and (not grid.hex_ocupied(hex)):
 		logic_manager.move_to(ui.move_source,hex)
 
 	print("left clicked")
@@ -83,16 +83,15 @@ func _on_archer_pressed() -> void:
 	archer_selected = true
 	scout_selected = false
 	knight_selected = false
-
 func _on_end_turn_pressed() -> void:
 	archer_selected = false
 	scout_selected = false
 	knight_selected = false
-	if logic_manager.current_player == 1:
-		logic_manager.current_player = 2
-	else:
+	if logic_manager.current_player == 2:
 		var panel = $UI/Unit_Placement_Panel
 		panel.hide()
 		turn_panel.show()
+		logic_manager.actions_enabled = true
 		# end placement phase
+	logic_manager.turn_end()
 	

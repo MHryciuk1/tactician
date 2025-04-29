@@ -5,6 +5,7 @@ func _ready() -> void:
 			"cost": 2,
 			"hp": 8,
 			"move_range": 3,
+			"max_move_range": 3,
 			"attack_range": 1,
 			"damage": 2,
 			"team": team,
