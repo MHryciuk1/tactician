@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c8tsps1qw36u1"]
 
 [ext_resource type="Script" uid="uid://doyonv5bsnl8v" path="res://Scripts/scout_unit.gd" id="1_07qd5"]
-[ext_resource type="PackedScene" uid="uid://dou5xb1aufjfs" path="res://Nodes/Units/hitbox.tscn" id="2_5344o"]
+[ext_resource type="PackedScene" uid="uid://dou5xb1aufjfs" path="res://nodes/Units/hitbox.tscn" id="2_5344o"]
 [ext_resource type="Texture2D" uid="uid://b8m8sh4j0ctwv" path="res://Assets/Placeholder/Art/archer.png" id="3_nohgw"]
 
 [node name="Scout_Unit" type="Node2D"]

@@ -18,6 +18,7 @@ func init(hex_grid_ref : Hex_Grid, ui_ref : UIManager, containers : Array) -> vo
 func do_effect(source_unit: Node, effect_function:Callable, targets: Array) -> void:
 	for target in targets:
 		effect_function.call( target)
+	$attacksound.play()
 	# other stuff needs to happen here? like ui updates or something
 
 func move_to(unit: Unit, target_cord: Vector2i) -> void:
@@ -90,6 +91,7 @@ func on_unit_death(unit: Node) -> void:
 	if unit in units:
 		units.erase(unit)
 	unit.queue_free()
+	$deathsound.play()
 	print("Unit ", unit.unit_type, " has been defeated.")
 	if units.is_empty():
 		print("game over!")
