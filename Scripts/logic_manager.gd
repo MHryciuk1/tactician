@@ -96,3 +96,14 @@ func on_unit_death(unit: Node) -> void:
 	if units.is_empty():
 		print("game over!")
 	#need some way to check if game is over
+
+func get_visible_coords() -> Array:
+	var visible_coords := []
+	for unit in units:
+		var center = unit.current_cord
+		var vision = unit.get_stats()["vision_range"]
+		var spaces = hex_grid.get_valid_spaces(center, vision)
+		for coord in spaces:
+			if not visible_coords.has(coord):
+				visible_coords.append(coord)
+	return visible_coords
