@@ -8,10 +8,14 @@ extends Node2D
 @export var knight: PackedScene
 @export var scout: PackedScene #no scout scene currently; just using knight
 @export var archer : PackedScene
-func _ready() -> void:
-
+func setup(server_data : Dictionary) -> void:
+	print(server_data)
+	grid.init(server_data.hex_layout)
 	ui.init(logic_manager, grid)
-	logic_manager.init(grid, ui, [p1_units,p2_units])
+	logic_manager.init(grid, ui, [p1_units,p2_units], server_data.player_name, server_data.turn_start)
+func _ready() -> void:
+	
+	
 	#var test_unit = archer.instantiate()
 	#test_unit.init(logiac_manager, grid, ui, Vector2i(-1,-1), 1)
 	#p1_units.add_child(test_unit)
@@ -84,14 +88,14 @@ func _on_archer_pressed() -> void:
 	scout_selected = false
 	knight_selected = false
 func _on_end_turn_pressed() -> void:
+	
 	archer_selected = false
 	scout_selected = false
 	knight_selected = false
-	if logic_manager.current_player == 2:
-		var panel = $UI/Unit_Placement_Panel
-		panel.hide()
-		turn_panel.show()
-		logic_manager.actions_enabled = true
-		# end placement phase
-	logic_manager.turn_end()
-	
+	#if logic_manager.current_player == 2:
+		#var panel = $UI/Unit_Placement_Panel
+		#panel.hide()
+		#turn_panel.show()
+		#logic_manager.actions_enabled = true
+		## end placement phase
+	logic_manager.send_starting_units()

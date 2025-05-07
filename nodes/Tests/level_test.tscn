@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://jvxo8n2p3x3g" path="res://Nodes/UI/moveable_camera.tscn" id="3_wbwiv"]
 [ext_resource type="Script" uid="uid://dxk5qf2akgabk" path="res://Scripts/ui_manager.gd" id="5_t1dee"]
 
-[node name="Level_Test" type="Node2D"]
+[node name="Level" type="Node2D"]
 script = ExtResource("1_45dpy")
 knight = ExtResource("2_5jfdo")
 scout = ExtResource("3_35ubm")
@@ -34,6 +34,7 @@ tile_map_data = PackedByteArray("AAD///7/AAAAAAAAAAD/////AAAAAAAAAAAAAP7/AAAAAAA
 script = ExtResource("5_t1dee")
 
 [node name="TurnPanel" type="PanelContainer" parent="UI"]
+visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -97,6 +98,7 @@ layout_mode = 2
 text = "Cancel"
 
 [node name="Unit_Placement_Panel" type="PanelContainer" parent="UI"]
+visible = false
 anchors_preset = -1
 anchor_left = 0.935
 anchor_top = 0.389

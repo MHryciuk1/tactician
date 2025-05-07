@@ -5,8 +5,10 @@ class_name UIManager
 @onready var turn_label      : Label  = $TurnPanel/VBoxContainer/TurnLabel
 @onready var player_label    : Label  = $TurnPanel/VBoxContainer/PlayerLabel
 @onready var end_turn_button : Button = $TurnPanel/VBoxContainer/EndTurnButton
+@onready var turn_panel : PanelContainer =$TurnPanel
 @onready var confirm_container :PanelContainer = $Confirm_Container
 @onready var confirm_container_progress : Label = $Confirm_Container/HBoxContainer/Progress
+@onready var unit_placement : PanelContainer = $Unit_Placement_Panel
 var selection_mode_on : bool = false
 var curr_targets : Array = []
 var curr_move : Dictionary
@@ -15,6 +17,14 @@ var move_source : Unit
 
 var lm: Logic_Manager
 var grid : Hex_Grid
+func open_turn_pannel() -> void:
+	turn_panel.show()
+func close_placement_pannel() -> void:
+	unit_placement.hide()
+	#turn_panel.show()
+func open_placement_pannel() -> void:
+	unit_placement.show()
+	
 func init(logic_manager, hex_grid)->void:
 	lm = logic_manager
 	grid = hex_grid

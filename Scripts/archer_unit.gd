@@ -1,5 +1,6 @@
 class_name Archer
 extends Unit
+
 func _ready() -> void:
 	stats = {
 			"cost": 1,
@@ -22,6 +23,7 @@ func _ready() -> void:
 			"uses_left" : 1
 			}
 	}
+	unit_id = 3
 		
 func attack_effect(target: Unit) -> void:
 	target.on_attacked(target, stats.damage)

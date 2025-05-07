@@ -12,8 +12,12 @@ enum  {
 	CELL_OCCUPANT = 2,
 	CELL_ID = 3
 }
+#indexed by cell type
+#move_cost,tile_atlas cord
+
 var pathfinding_graph = AStar2D.new()
 var cell_data : Dictionary = {}
+var hex_id_to_atlas_cord : Array[Vector2i]= [Vector2i(0,0)]
 @export var hover_highlight_color : Color = Color.RED
 @onready var highlight_layer : TileMapLayer = %Highlight_Layer
 @onready var mouse_highlight_layer : TileMapLayer = %Mouse_Highlight_Layer
@@ -22,6 +26,13 @@ var cell_data : Dictionary = {}
 var line_drawing_mode : bool = false
 var line_source : Unit
 #kept as a sepreate function to make switching the representation of cell_data easier
+# layout of data [[cord, cell_type],...]
+func init(layout : Array) -> void:
+	cell_data.clear()
+	clear()
+	for i in layout:
+		set_cell(i.location,0,hex_id_to_atlas_cord[i.hex_type],0)
+	setup()
 func enable_line_drawing_mode(source : Unit) -> void:
 	line_source = source
 	line_drawing_mode = true 
@@ -37,7 +48,7 @@ func insert_to_cell_data(data, cord) ->void:
 
 func get_cell_data(cord : Vector2i):
 	return cell_data.get(cord)
-func _ready() -> void:
+func setup() -> void:
 	var cells = get_used_cells()
 	var to_connect : Array = []
 	for i in cells:
@@ -56,7 +67,9 @@ func _ready() -> void:
 		for j in adj:
 			var data = get_cell_data(j)
 			if data:
-				pathfinding_graph.connect_points(to_connect[i],data[CELL_ID])
+				pathfinding_graph.connect_points(to_connect[i],data[CELL_ID])	
+func _ready() -> void:
+	pass
 	#print(cell_data)
 	#print(get_valid_spaces(Vector2i(1,1),1))
 	
@@ -132,7 +145,7 @@ func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool = false) -
 				if with_data:
 					out.append(data)
 				else:
-					print(data[0])
+					#print(data[0])
 					out.append(data[0])
 	return out
 

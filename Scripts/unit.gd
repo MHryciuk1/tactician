@@ -1,10 +1,12 @@
 class_name Unit
 extends Node2D
 
+
 signal unit_selected(unit)
 signal unit_moved(unit, to_coord)
 signal unit_died(unit)
-
+var unique_id :int = -1
+var unit_id : int = 0
 @export var team: int = 1
 @export var unit_type: String = "soldier"
 var stats : Dictionary = {
@@ -62,6 +64,8 @@ func on_attacked(attacker: Node, dmg: int) -> void:
 		emit_signal("unit_died", self)
 
 func on_click():
+	print(logic_manager.player_name)
+	print(stats)
 	var valid_moves = hex_grid.get_valid_spaces(current_cord, get_stats().attack_range,false)
 	hex_grid.highlight_hexes(valid_moves, Color.BLUE)
 	ui.send_data("test_ui_id", stats, moves, self)
