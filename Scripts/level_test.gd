@@ -31,12 +31,7 @@ func _ready() -> void:
 	
 var p1_cost = 5
 var p2_cost = 5
-func _on_hex_grid_cell_left_clicked(curr_hex) -> void:
-	print("left clicked")
-	print(curr_hex)
-	var new_unit = null
 
-	pass
 func selection_handler(hex : Vector2i) -> void:
 	var new_unit : Unit= null
 

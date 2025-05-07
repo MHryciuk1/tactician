@@ -40,13 +40,13 @@ var current_cord: Vector2i
 var alive: bool = true
 
 
-func init(logic_ref: Node, grid_ref: Node, ui_ref : Node, start_cord: Vector2i, team_num : int, healthbar_ref: Node) -> void:
+func init(logic_ref: Node, grid_ref: Node, ui_ref : Node, start_cord: Vector2i, team_num : int) -> void:
 
 	logic_manager = logic_ref
 	ui = ui_ref
 	hex_grid = grid_ref
 	current_cord = start_cord
-	health_bar = healthbar_ref
+	#health_bar = healthbar_ref
 	health_bar.set_max_health(stats.hp)
 	health_bar.set_health(stats.hp)
 	team = team_num
