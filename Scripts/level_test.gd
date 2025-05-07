@@ -8,6 +8,7 @@ extends Node2D
 @export var knight: PackedScene
 @export var scout: PackedScene #no scout scene currently; just using knight
 @export var archer : PackedScene
+@export var healthbar: PackedScene
 func _ready() -> void:
 	ui.init(logic_manager)
 	turn_panel.hide()
@@ -21,6 +22,8 @@ func _ready() -> void:
 	#p2_units.add_child(test_unit2)
 	
 	
+var p1_cost = 5
+var p2_cost = 5
 func _on_hex_grid_cell_left_clicked(curr_hex) -> void:
 	print("left clicked")
 	print(curr_hex)
@@ -32,12 +35,18 @@ func _on_hex_grid_cell_left_clicked(curr_hex) -> void:
 	if scout_selected:
 		new_unit = scout.instantiate()
 	if new_unit != null:
-		if logic_manager.current_player == 1:	
-			new_unit.init(logic_manager, grid, ui, curr_hex, "player1")
+		var hb = healthbar.instantiate()
+		new_unit.add_child(hb)
+		if logic_manager.current_player == 1 and p1_cost > 0:	
+			new_unit.init(logic_manager, grid, ui, curr_hex, "player1", hb)
 			p1_units.add_child(new_unit)
-		else:
-			new_unit.init(logic_manager, grid, ui, curr_hex, "player2")
+			p1_cost -= new_unit.stats.cost
+		elif logic_manager.current_player == 2 and p2_cost > 0:
+			new_unit.init(logic_manager, grid, ui, curr_hex, "player2", hb)
 			p2_units.add_child(new_unit)
+			p2_cost -= new_unit.stats.cost
+		else:
+			print("not enough energy")
 
 
 func _on_hex_grid_cell_right_clicked() -> void:

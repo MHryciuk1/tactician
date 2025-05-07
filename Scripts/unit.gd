@@ -19,6 +19,7 @@ var stats : Dictionary = {
 var logic_manager: Node = null
 var hex_grid: Node = null
 var ui: UIManager = null
+var health_bar: Node = null
 
 
 var moves = {
@@ -28,12 +29,15 @@ var moves = {
 var current_cord: Vector2i
 var alive: bool = true
 
-func init(logic_ref: Node, grid_ref: Node, ui_ref : Node, start_cord: Vector2i, team_str : String) -> void:
+func init(logic_ref: Node, grid_ref: Node, ui_ref : Node, start_cord: Vector2i, team_str : String, healthbar_ref: Node) -> void:
 	logic_manager = logic_ref
 	ui = ui_ref
 	hex_grid = grid_ref
 	current_cord = start_cord
 	team = team_str
+	health_bar = healthbar_ref
+	health_bar.set_max_health(stats.hp)
+	health_bar.set_health(stats.hp)
 	hex_grid.set_node_location(self, start_cord)
 
 func get_stats() -> Dictionary:
@@ -50,6 +54,7 @@ func attack_effect(target: Unit) -> void:
 
 func on_attacked(attacker: Node, dmg: int) -> void:
 	stats.hp -= dmg
+	health_bar.set_health(stats.hp)
 	if stats.hp <= 0 and alive:
 		print("im dead")
 		alive = false
