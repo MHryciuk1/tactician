@@ -8,13 +8,17 @@ extends Node2D
 @export var knight: PackedScene
 @export var scout: PackedScene #no scout scene currently; just using knight
 @export var archer : PackedScene
+
+@export var healthbar: PackedScene
+
 func setup(server_data : Dictionary) -> void:
 	print(server_data)
 	grid.init(server_data.hex_layout)
 	ui.init(logic_manager, grid)
 	logic_manager.init(grid, ui, [p1_units,p2_units], server_data.player_name, server_data.turn_start)
+
 func _ready() -> void:
-	
+	pass
 	
 	#var test_unit = archer.instantiate()
 	#test_unit.init(logiac_manager, grid, ui, Vector2i(-1,-1), 1)
@@ -22,9 +26,20 @@ func _ready() -> void:
 	#var test_unit2 = archer.instantiate()
 	#test_unit2.init(logic_manager, grid, ui, Vector2i(0,-2), 2)
 	#p2_units.add_child(test_unit2)
+
+	
+	
+var p1_cost = 5
+var p2_cost = 5
+func _on_hex_grid_cell_left_clicked(curr_hex) -> void:
+	print("left clicked")
+	print(curr_hex)
+	var new_unit = null
+
 	pass
 func selection_handler(hex : Vector2i) -> void:
 	var new_unit : Unit= null
+
 	if knight_selected:
 		new_unit = knight.instantiate()
 	if archer_selected:
@@ -32,6 +47,7 @@ func selection_handler(hex : Vector2i) -> void:
 	if scout_selected:
 		new_unit = scout.instantiate()
 	if new_unit != null:
+
 		new_unit.init(logic_manager, grid, ui, hex, logic_manager.current_player)
 		if logic_manager.current_player == 1:
 			p1_units.add_child(new_unit)

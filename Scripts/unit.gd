@@ -21,7 +21,11 @@ var stats : Dictionary = {
 }
 var logic_manager: Node = null
 var hex_grid: Node = null
-var ui  = null
+
+var ui: UIManager = null
+var health_bar: Node = null
+
+
 
 func turn_end() -> void:
 	stats.move_range = stats.max_move_range
@@ -35,11 +39,16 @@ var moves = {
 var current_cord: Vector2i
 var alive: bool = true
 
-func init(logic_ref: Node, grid_ref: Node, ui_ref : Node, start_cord: Vector2i, team_num : int) -> void:
+
+func init(logic_ref: Node, grid_ref: Node, ui_ref : Node, start_cord: Vector2i, team_num : int, healthbar_ref: Node) -> void:
+
 	logic_manager = logic_ref
 	ui = ui_ref
 	hex_grid = grid_ref
 	current_cord = start_cord
+	health_bar = healthbar_ref
+	health_bar.set_max_health(stats.hp)
+	health_bar.set_health(stats.hp)
 	team = team_num
 	hex_grid.set_node_location(self, start_cord)
 
@@ -57,6 +66,7 @@ func attack_effect(target: Unit) -> void:
 
 func on_attacked(attacker: Node, dmg: int) -> void:
 	stats.hp -= dmg
+	health_bar.set_health(stats.hp)
 	if stats.hp <= 0 and alive:
 		print("im dead")
 		alive = false

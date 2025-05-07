@@ -5,7 +5,7 @@ extends Node
 @export var knight_scene : PackedScene
 func _ready() -> void:
 	var new_unit = knight_scene.instantiate()
-	new_unit.init(logic_manager, hex_grid, Vector2i(0,0))
+	new_unit.init(logic_manager, hex_grid, Vector2i(0,0), "team1")
 	add_child(new_unit)
 	
 	print(new_unit.stats)
