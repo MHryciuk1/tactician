@@ -18,6 +18,7 @@ func setup(server_data : Dictionary) -> void:
 	logic_manager.init(grid, ui, [p1_units,p2_units], server_data.player_name, server_data.turn_start)
 
 func _ready() -> void:
+	
 	pass
 	
 	#var test_unit = archer.instantiate()

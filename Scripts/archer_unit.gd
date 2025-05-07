@@ -23,6 +23,9 @@ func _ready() -> void:
 			"uses_left" : 1
 			}
 	}
+	health_bar = $HealthBar
+	health_bar.set_max_health(stats.hp)
+	health_bar.set_health(stats.hp)
 	unit_id = 3
 		
 func attack_effect(target: Unit) -> void:

@@ -9,6 +9,7 @@ var unique_id :int = -1
 var unit_id : int = 0
 @export var team: int = 1
 @export var unit_type: String = "soldier"
+
 var stats : Dictionary = {
 	"cost": 1,
 	"hp": 10,
@@ -25,7 +26,8 @@ var hex_grid: Node = null
 var ui: UIManager = null
 var health_bar: Node = null
 
-
+func _ready() -> void:
+	health_bar = $HealthBar
 
 func turn_end() -> void:
 	stats.move_range = stats.max_move_range
@@ -46,9 +48,7 @@ func init(logic_ref: Node, grid_ref: Node, ui_ref : Node, start_cord: Vector2i, 
 	ui = ui_ref
 	hex_grid = grid_ref
 	current_cord = start_cord
-	#health_bar = healthbar_ref
-	health_bar.set_max_health(stats.hp)
-	health_bar.set_health(stats.hp)
+	
 	team = team_num
 	hex_grid.set_node_location(self, start_cord)
 

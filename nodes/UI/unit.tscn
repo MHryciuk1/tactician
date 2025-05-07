@@ -1,11 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjdi3onk0ekeg"]
+[gd_scene load_steps=2 format=3 uid="uid://cjdi3onk0ekeg"]
 
 [ext_resource type="Script" uid="uid://dp5wwsqq2cp78" path="res://Scripts/unit.gd" id="1_s1oky"]
-[ext_resource type="PackedScene" path="res://nodes/UI/HealthBar.tscn" id="2_v4ixb"]
 
 [node name="Unit" type="Node2D"]
 script = ExtResource("1_s1oky")
-
-[node name="HealthBar" parent="." instance=ExtResource("2_v4ixb")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

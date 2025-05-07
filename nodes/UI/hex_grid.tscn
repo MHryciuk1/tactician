@@ -13,7 +13,7 @@ texture_region_size = Vector2i(222, 256)
 [sub_resource type="TileSet" id="TileSet_axhjj"]
 tile_shape = 3
 tile_size = Vector2i(222, 256)
-sources/2 = SubResource("TileSetAtlasSource_2q47x")
+sources/0 = SubResource("TileSetAtlasSource_2q47x")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fa2rr"]
 resource_name = "blank_high"
