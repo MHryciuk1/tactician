@@ -84,6 +84,7 @@ func init(hex_grid_ref : Hex_Grid, ui_ref : UIManager, containers : Array, name 
 func do_effect(source_unit: Node, effect_function:Callable, targets: Array) -> void:
 	for target in targets:
 		effect_function.call( target)
+	$attacksound.play()
 	# other stuff needs to happen here? like ui updates or something
 @rpc()
 func move_request(source : int, target : Vector2i) -> void:
@@ -178,7 +179,19 @@ func on_unit_death(unit: Node) -> void:
 	if unit in units:
 		units.erase(unit)
 	unit.queue_free()
+	$deathsound.play()
 	print("Unit ", unit.unit_type, " has been defeated.")
 	if units.is_empty():
 		print("game over!")
 	#need some way to check if game is over
+
+func get_visible_coords() -> Array:
+	var visible_coords := []
+	for unit in units:
+		var center = unit.current_cord
+		var vision = unit.get_stats()["vision_range"]
+		var spaces = hex_grid.get_valid_spaces(center, vision)
+		for coord in spaces:
+			if not visible_coords.has(coord):
+				visible_coords.append(coord)
+	return visible_coords

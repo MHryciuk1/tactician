@@ -1,19 +1,19 @@
-[gd_scene load_steps=12 format=3 uid="uid://dn76l7tnyncxh"]
+[gd_scene load_steps=13 format=4 uid="uid://dn76l7tnyncxh"]
 
 [ext_resource type="Texture2D" uid="uid://dnhw7jeu7ppme" path="res://Assets/Placeholder/Art/blank_hex.png" id="1_fa2rr"]
+[ext_resource type="Texture2D" uid="uid://b6t6lsb3abvm7" path="res://Assets/Placeholder/Art/hex_ground_test3.png" id="1_y233k"]
 [ext_resource type="Script" uid="uid://5emsgmhd5nvl" path="res://Scripts/hex_grid.gd" id="2_jylf2"]
 [ext_resource type="Texture2D" uid="uid://bf50ngn7p03ys" path="res://Assets/Placeholder/Art/fog_hex.png" id="3_jylf2"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_snye5"]
-resource_name = "blank_high"
-texture = ExtResource("1_fa2rr")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2q47x"]
+texture = ExtResource("1_y233k")
 texture_region_size = Vector2i(222, 256)
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_axhjj"]
 tile_shape = 3
 tile_size = Vector2i(222, 256)
-sources/0 = SubResource("TileSetAtlasSource_snye5")
+sources/2 = SubResource("TileSetAtlasSource_2q47x")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fa2rr"]
 resource_name = "blank_high"
@@ -49,6 +49,7 @@ tile_size = Vector2i(222, 256)
 sources/0 = SubResource("TileSetAtlasSource_jylf2")
 
 [node name="Hex_Grid" type="TileMapLayer"]
+tile_map_data = PackedByteArray("AAD/////AgAAAAAAAAAAAP//AgAAAAAAAAABAP//AgAAAAAAAAACAAAAAgAAAAAAAAABAAAAAgAAAAAAAAAAAAAAAgAAAAAAAAD//wAAAgAAAAAAAAD+////AgAAAAAAAAACAAEAAgAAAAAAAAADAAIAAgAAAAAAAAACAAMAAgAAAAAAAAACAAQAAgAAAAAAAAABAAUAAgAAAAAAAAAAAAUAAgAAAAAAAAD//wUAAgAAAAAAAAD+/wUAAgAAAAAAAAD+/wQAAgAAAAAAAAD9/wMAAgAAAAAAAAD9/wIAAgAAAAAAAAD9/wEAAgAAAAAAAAD+/wAAAgAAAAAAAAD+/wEAAgAAAAAAAAD//wEAAgAAAAAAAAAAAAEAAgAAAAAAAAABAAEAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAgAAAAAAAAD//wIAAgAAAAAAAAD+/wIAAgAAAAAAAAD+/wMAAgAAAAAAAAD//wMAAgAAAAAAAAAAAAMAAgAAAAAAAAABAAMAAgAAAAAAAAABAAQAAgAAAAAAAAAAAAQAAgAAAAAAAAD//wQAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_axhjj")
 script = ExtResource("2_jylf2")
 
