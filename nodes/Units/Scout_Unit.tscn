@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8tsps1qw36u1"]
+
+[ext_resource type="Script" uid="uid://doyonv5bsnl8v" path="res://Scripts/scout_unit.gd" id="1_07qd5"]
+[ext_resource type="PackedScene" uid="uid://dou5xb1aufjfs" path="res://Nodes/Units/hitbox.tscn" id="2_5344o"]
+[ext_resource type="Texture2D" uid="uid://b8m8sh4j0ctwv" path="res://Assets/Placeholder/Art/archer.png" id="3_nohgw"]
+
+[node name="Scout_Unit" type="Node2D"]
+script = ExtResource("1_07qd5")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_5344o")]
+
+[node name="Sprite2D" parent="Hitbox" index="1"]
+modulate = Color(0.975741, 0.000727544, 0.966301, 1)
+position = Vector2(0.999997, 1.90735e-06)
+scale = Vector2(1.96875, 1.9375)
+texture = ExtResource("3_nohgw")
+
+[connection signal="sprite_left_clicked" from="Hitbox" to="." method="_on_hitbox_sprite_left_clicked"]
+[connection signal="sprite_right_clicked" from="Hitbox" to="." method="_on_hitbox_sprite_right_clicked"]
+
+[editable path="Hitbox"]

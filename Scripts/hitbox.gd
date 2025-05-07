@@ -1,4 +1,4 @@
-extends Sprite2D
+extends Node2D
 signal sprite_left_clicked
 signal sprite_right_clicked
 var mouse_in: bool =  false

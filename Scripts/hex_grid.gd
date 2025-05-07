@@ -1,3 +1,4 @@
+class_name Hex_Grid
 extends TileMapLayer
 const tile_size := 128
 var curr_hex := Vector2i(-1,-1)
@@ -11,21 +12,43 @@ enum  {
 	CELL_OCCUPANT = 2,
 	CELL_ID = 3
 }
+#indexed by cell type
+#move_cost,tile_atlas cord
+
 var pathfinding_graph = AStar2D.new()
 var cell_data : Dictionary = {}
+var hex_id_to_atlas_cord : Array[Vector2i]= [Vector2i(0,0)]
 @export var hover_highlight_color : Color = Color.RED
 @onready var highlight_layer : TileMapLayer = %Highlight_Layer
+@onready var mouse_highlight_layer : TileMapLayer = %Mouse_Highlight_Layer
 @onready var fog_layer : TileMapLayer = %Fog_Layer
+@onready var line : Line2D = %Line
+var line_drawing_mode : bool = false
+var line_source : Unit
 #kept as a sepreate function to make switching the representation of cell_data easier
+# layout of data [[cord, cell_type],...]
+func init(layout : Array) -> void:
+	cell_data.clear()
+	clear()
+	for i in layout:
+		set_cell(i.location,0,hex_id_to_atlas_cord[i.hex_type],0)
+	setup()
+func enable_line_drawing_mode(source : Unit) -> void:
+	line_source = source
+	line_drawing_mode = true 
+func disable_line_drawing_mode() -> void:
+	line_drawing_mode = false
+	line.hide() 
 func insert_to_cell_data(data, cord) ->void:
 	
 	cell_data[cord] = data
 	#cell_data[cord.x][cord.y] = data
 	#print(cell_data[cord.x][cord.y])
 	#pass
+
 func get_cell_data(cord : Vector2i):
 	return cell_data.get(cord)
-func _ready() -> void:
+func setup() -> void:
 	var cells = get_used_cells()
 	var to_connect : Array = []
 	for i in cells:
@@ -44,7 +67,9 @@ func _ready() -> void:
 		for j in adj:
 			var data = get_cell_data(j)
 			if data:
-				pathfinding_graph.connect_points(to_connect[i],data[CELL_ID])
+				pathfinding_graph.connect_points(to_connect[i],data[CELL_ID])	
+func _ready() -> void:
+	pass
 	#print(cell_data)
 	#print(get_valid_spaces(Vector2i(1,1),1))
 	
@@ -70,26 +95,44 @@ func oddr_to_axial(oddr_cord : Vector2i) -> Vector2i:
 	#var angle_deg = 60 * i - 30
 	#var angle_rad = PI / 180 * angle_deg
 	#return Vector2(center.x + size *cos(angle_rad),center.y + size * sin(angle_rad))
+func draw_line_on_grid(source : Vector2i, dest : Vector2i) -> void:
+	#print(get_hexes_along_path_to(source, dest, false))
+	#print(str("s: ", source, "d ", dest))
+	line.points = get_hexes_along_path_to(source, dest, false).map(Callable(map_to_local))
+	
+	line.show()
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		var mouse_position := get_local_mouse_position()
 		var map_cord := local_to_map(mouse_position)
+		var should_draw_line : bool = false
 		if not map_cord in get_used_cells():
 			curr_hex_set = false
-			highlight_layer.erase_cell(curr_hex)
+			mouse_highlight_layer.erase_cell(curr_hex)
 			return
+			
 		if curr_hex_set and (map_cord !=curr_hex):
-			highlight_layer.erase_cell(curr_hex)
-		highlight_layer.set_cell(map_cord,0, Vector2i(0,0),0)
+			mouse_highlight_layer.erase_cell(curr_hex)
+			if line_drawing_mode:
+				should_draw_line = true
+			
+		mouse_highlight_layer.set_cell(map_cord,0, Vector2i(0,0),0)
 		curr_hex = map_cord
 		curr_hex_set = true
+		if should_draw_line:
+			draw_line_on_grid(line_source.current_cord,curr_hex)
 	if (event is InputEventMouseButton) and curr_hex_set and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			cell_left_clicked.emit(curr_hex)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			
 			cell_right_clicked.emit(curr_hex)
-			#if event is InputEventMouseButton:
-func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool) -> Array:
+		#if event is InputEventMouseButton:
+func hex_ocupied(hex : Vector2i) -> bool:
+	if get_cell_data(hex)[CELL_OCCUPANT]:
+		return true
+	return false
+func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool = false) -> Array:
 	var axal_cord :Vector2i= oddr_to_axial(cord)
 	var N = abs(radius)
 	var out : Array = []
@@ -102,11 +145,11 @@ func get_valid_spaces(cord : Vector2i, radius : int, with_data : bool) -> Array:
 				if with_data:
 					out.append(data)
 				else:
-					print(data[0])
+					#print(data[0])
 					out.append(data[0])
 	return out
 
-func get_hexes_along_path_to(cord_a : Vector2i, cord_b : Vector2i, data : bool = false) -> Array:
+func get_hexes_along_path_to(cord_a : Vector2i, cord_b : Vector2i, data : bool = false, partial_path : bool = false) -> Array:
 	var data_a = get_cell_data(cord_a)
 	var data_b = get_cell_data(cord_b)
 	if (not data_a) or (not data_b):
@@ -114,7 +157,7 @@ func get_hexes_along_path_to(cord_a : Vector2i, cord_b : Vector2i, data : bool =
 		print(str("cord_a: ", cord_a))
 		print(str("cord_b: ", cord_b))
 		return []
-	var raw_path : PackedVector2Array = pathfinding_graph.get_point_path(data_a[CELL_ID], data_b[CELL_ID])
+	var raw_path : PackedVector2Array = pathfinding_graph.get_point_path(data_a[CELL_ID], data_b[CELL_ID], partial_path)
 	if not data:
 		return raw_path
 	var out : Array = []
@@ -125,6 +168,7 @@ func get_all_posible_movement_locations(cord :Vector2i,distance : int) -> Array:
 	
 	return []
 func highlight_hexes(hexes : Array, color : Color) -> void:
+	highlight_layer.clear()
 	var erase : = true
 	if color != Color.WHITE:
 		erase = false
@@ -150,7 +194,8 @@ func set_node_location(node : Node2D, cord : Vector2i) -> void :
 		return
 	node.global_position = to_global(map_to_local(cord))
 	data[CELL_OCCUPANT] = node
-	
+func set_hex_empty(hex : Vector2i) -> void:
+	get_cell_data(hex)[CELL_OCCUPANT] =  null
 func clear_hex(cord : Vector2i) -> void:
 	var data = get_cell_data(cord)
 	if not data:
