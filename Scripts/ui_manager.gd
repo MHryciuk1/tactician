@@ -123,7 +123,7 @@ func _on_confirm_pressed() -> void:
 	print(curr_targets)
 	if(curr_targets.size() >= curr_move.min_targets):
 		print("doing move")
-		lm.do_effect(move_source, curr_move.function, curr_targets)
+		lm.do_effect(move_source, curr_move.name, curr_targets)
 		curr_move.uses_left -=1
 		cancel_selection_mode()
 

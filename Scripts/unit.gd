@@ -51,7 +51,9 @@ func init(logic_ref: Node, grid_ref: Node, ui_ref : Node, start_cord: Vector2i, 
 	
 	team = team_num
 	hex_grid.set_node_location(self, start_cord)
-
+func _update_bar() -> void:
+	health_bar.set_health(stats.hp)
+	health_bar._update_bar()
 func get_stats() -> Dictionary:
 	return stats
 
