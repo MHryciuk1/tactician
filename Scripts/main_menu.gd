@@ -5,7 +5,7 @@ extends Control
 func _on_start_button_pressed() -> void:
 	self.hide()
 	var client = get_parent()
-	var connection_menu = client.get_node("Connection_Menu")
+	var connection_menu = client.get_child(0)
 	connection_menu.show()
 
 
