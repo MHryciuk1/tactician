@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://dtmb83d7ixnbf"]
+[gd_scene load_steps=12 format=4 uid="uid://dtmb83d7ixnbf"]
 
 [ext_resource type="Script" uid="uid://c5rhyur4xs6uf" path="res://Scripts/logic_manager.gd" id="1_8m837"]
 [ext_resource type="Script" uid="uid://cq6xfied52tag" path="res://Scripts/level_test.gd" id="1_45dpy"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dxk5qf2akgabk" path="res://Scripts/ui_manager.gd" id="5_t1dee"]
 [ext_resource type="AudioStream" uid="uid://cqy07n6ku0oxi" path="res://Assets/Placeholder/SFX/sword-sound.wav" id="9_evvim"]
 [ext_resource type="AudioStream" uid="uid://bwapw7d1ksck4" path="res://Assets/Placeholder/SFX/bleh.wav" id="10_e1i7i"]
+[ext_resource type="AudioStream" uid="uid://chsufhpr3m7fg" path="res://Assets/Placeholder/SFX/BackgroundMusic.wav" id="11_e1i7i"]
 
 [node name="Level_Test" type="Node2D"]
 script = ExtResource("1_45dpy")
@@ -133,6 +134,11 @@ text = "Archer"
 [node name="End Turn" type="Button" parent="UI/Unit_Placement_Panel/VBoxContainer"]
 layout_mode = 2
 text = "Finish Placement"
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_e1i7i")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="cell_left_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_left_clicked"]
 [connection signal="cell_right_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_right_clicked"]

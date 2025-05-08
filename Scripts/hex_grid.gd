@@ -191,3 +191,11 @@ func clear_hex(cord : Vector2i) -> void:
 	if data[CELL_OCCUPANT]:
 		data[CELL_OCCUPANT].queue_free()
 		
+func update_vision(vision : Array) -> void:
+	var all_cells = get_used_cells()
+	reveal_hexes(vision)
+	var foggy = []
+	for cell in all_cells:
+		if not cell in vision:
+			foggy.append(cell)
+	obscure_hexes(foggy)
