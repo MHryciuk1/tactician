@@ -1,21 +1,32 @@
-[gd_scene load_steps=11 format=4 uid="uid://dtmb83d7ixnbf"]
+[gd_scene load_steps=12 format=4 uid="uid://dtmb83d7ixnbf"]
 
 [ext_resource type="Script" uid="uid://c5rhyur4xs6uf" path="res://Scripts/logic_manager.gd" id="1_8m837"]
+<<<<<<< HEAD
+[ext_resource type="Script" uid="uid://cq6xfied52tag" path="res://Scripts/level_test.gd" id="1_35r2b"]
+[ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://nodes/UI/hex_grid.tscn" id="2_45dpy"]
+[ext_resource type="PackedScene" uid="uid://bjdhm65rdruo2" path="res://nodes/Units/Knight_Unit.tscn" id="2_e1i7i"]
+[ext_resource type="PackedScene" uid="uid://jvxo8n2p3x3g" path="res://nodes/UI/moveable_camera.tscn" id="3_wbwiv"]
+[ext_resource type="PackedScene" uid="uid://c8tsps1qw36u1" path="res://nodes/Units/Scout_Unit.tscn" id="3_ye4ea"]
+[ext_resource type="PackedScene" uid="uid://iclbvx22a456" path="res://nodes/Units/archer_unit.tscn" id="4_2s3xl"]
+[ext_resource type="PackedScene" uid="uid://dvb5tahn2q5dj" path="res://nodes/UI/HealthBar.tscn" id="5_atumu"]
+=======
 [ext_resource type="Script" uid="uid://cq6xfied52tag" path="res://Scripts/level_test.gd" id="1_45dpy"]
 [ext_resource type="PackedScene" uid="uid://bjdhm65rdruo2" path="res://Nodes/Units/Knight_Unit.tscn" id="2_5jfdo"]
 [ext_resource type="PackedScene" uid="uid://iclbvx22a456" path="res://Nodes/Units/archer_unit.tscn" id="2_18wxx"]
 [ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://Nodes/UI/hex_grid.tscn" id="2_45dpy"]
 [ext_resource type="PackedScene" uid="uid://c8tsps1qw36u1" path="res://Nodes/Units/Scout_Unit.tscn" id="3_35ubm"]
 [ext_resource type="PackedScene" uid="uid://jvxo8n2p3x3g" path="res://Nodes/UI/moveable_camera.tscn" id="3_wbwiv"]
+>>>>>>> 076f4158c3ee8404d86d2b5884c1bc6acd604260
 [ext_resource type="Script" uid="uid://dxk5qf2akgabk" path="res://Scripts/ui_manager.gd" id="5_t1dee"]
 [ext_resource type="AudioStream" uid="uid://cqy07n6ku0oxi" path="res://Assets/Placeholder/SFX/sword-sound.wav" id="9_evvim"]
 [ext_resource type="AudioStream" uid="uid://bwapw7d1ksck4" path="res://Assets/Placeholder/SFX/bleh.wav" id="10_e1i7i"]
 
 [node name="Level" type="Node2D"]
-script = ExtResource("1_45dpy")
-knight = ExtResource("2_5jfdo")
-scout = ExtResource("3_35ubm")
-archer = ExtResource("2_18wxx")
+script = ExtResource("1_35r2b")
+knight = ExtResource("2_e1i7i")
+scout = ExtResource("3_ye4ea")
+archer = ExtResource("4_2s3xl")
+healthbar = ExtResource("5_atumu")
 
 [node name="Logic_Manager" type="Node" parent="."]
 script = ExtResource("1_8m837")
@@ -28,7 +39,7 @@ stream = ExtResource("9_evvim")
 
 [node name="Hex_Grid" parent="." instance=ExtResource("2_45dpy")]
 position = Vector2(169, 406)
-tile_map_data = PackedByteArray("AAD/////AgAAAAAAAAAAAP//AgAAAAAAAAABAP//AgAAAAAAAAABAAAAAgAAAAAAAAAAAAAAAgAAAAAAAAD//wAAAgAAAAAAAAD+////AgAAAAAAAAD9/wEAAgAAAAAAAAD+/wAAAgAAAAAAAAD+/wEAAgAAAAAAAAD//wEAAgAAAAAAAAAAAAEAAgAAAAAAAAD+//7/AgAAAAAAAAD///7/AgAAAAAAAAD9////AgAAAAAAAAAAAP7/AgAAAAAAAAABAP7/AgAAAAAAAAD9/wAAAgAAAAAAAAD///3/AgAAAAAAAAD+//3/AgAAAAAAAAD9//7/AgAAAAAAAAD9//3/AgAAAAAAAAD+//z/AgAAAAAAAAD///z/AgAAAAAAAAAAAPz/AgAAAAAAAAAAAP3/AgAAAAAAAAD8////AgAAAAAAAAD8//7/AgAAAAAAAAD8//3/AgAAAAAAAAD9//z/AgAAAAAAAAD9//v/AgAAAAAAAAD+//v/AgAAAAAAAAD///v/AgAAAAAAAAAAAPv/AgAAAAAAAAABAPz/AgAAAAAAAAABAP3/AgAAAAAAAAACAP7/AgAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAD/////AgAAAAAAAAAAAP//AgAAAAAAAAABAP//AgAAAAAAAAABAAAAAgAAAAAAAAAAAAAAAgAAAAAAAAD//wAAAgAAAAAAAAD+////AgAAAAAAAAD9/wEAAgAAAAAAAAD+/wAAAgAAAAAAAAD+/wEAAgAAAAAAAAD//wEAAgAAAAAAAAAAAAEAAgAAAAAAAAD+//7/AgAAAAAAAAD///7/AgAAAAAAAAD9////AgAAAAAAAAAAAP7/AgAAAAAAAAABAP7/AgAAAAAAAAD9/wAAAgAAAAAAAAD9//7/AgAAAAAAAAD9//3/AgAAAAAAAAD+//z/AgAAAAAAAAD///z/AgAAAAAAAAAAAPz/AgAAAAAAAAD8////AgAAAAAAAAD8//7/AgAAAAAAAAD8//3/AgAAAAAAAAD9//z/AgAAAAAAAAD9//v/AgAAAAAAAAD+//v/AgAAAAAAAAD///v/AgAAAAAAAAAAAPv/AgAAAAAAAAABAPz/AgAAAAAAAAABAP3/AgAAAAAAAAACAP7/AgAAAAAAAAAAAP3/AgAAAAAAAAD///3/AgAAAAAAAAD+//3/AgAAAAAAAAA=")
 
 [node name="Units" type="Node" parent="."]
 
@@ -135,6 +146,64 @@ text = "Archer"
 [node name="End Turn" type="Button" parent="UI/Unit_Placement_Panel/VBoxContainer"]
 layout_mode = 2
 text = "Finish Placement"
+
+[node name="EndScreen" type="Panel" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="UI/EndScreen"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 372.0
+offset_top = -180.0
+offset_right = -328.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "You Win!"
+
+[node name="Button" type="Button" parent="UI/EndScreen"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -80.0
+offset_right = 44.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Play Again"
+
+[node name="TurnPopUp" type="PanelContainer" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 170.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="UI/TurnPopUp"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Your Turn:
+Turn 1"
 
 [connection signal="cell_left_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_left_clicked"]
 [connection signal="cell_right_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_right_clicked"]
