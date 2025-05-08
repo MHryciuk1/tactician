@@ -3,7 +3,10 @@ extends Control
 @onready var options = $VBoxContainer
 
 func _on_start_button_pressed() -> void:
-	pass
+	self.hide()
+	var client = get_parent()
+	var connection_menu = client.get_node("Connection_Menu")
+	connection_menu.show()
 
 
 func _on_instructions_button_pressed() -> void:

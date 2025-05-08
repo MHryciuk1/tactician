@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bu4f2fukishdv"]
 
 [ext_resource type="Script" uid="uid://1rtyfkmxe57v" path="res://Scripts/client.gd" id="1_ldu3b"]
-[ext_resource type="PackedScene" uid="uid://dtmb83d7ixnbf" path="res://Nodes/Tests/level_test.tscn" id="2_4v2eb"]
+[ext_resource type="PackedScene" uid="uid://dtmb83d7ixnbf" path="res://nodes/Tests/level_test.tscn" id="2_4v2eb"]
 [ext_resource type="PackedScene" uid="uid://bw4ha2qrxggsy" path="res://nodes/UI/MainMenu.tscn" id="3_5cpbq"]
 
 [node name="Peer" type="Node"]
@@ -9,6 +9,7 @@ script = ExtResource("1_ldu3b")
 level_scene = ExtResource("2_4v2eb")
 
 [node name="Connection_Menu" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -29,7 +30,6 @@ layout_mode = 2
 text = "Connect"
 
 [node name="MainMenu" parent="." instance=ExtResource("3_5cpbq")]
-visible = false
 
 [node name="EndScreen" type="Panel" parent="."]
 visible = false
