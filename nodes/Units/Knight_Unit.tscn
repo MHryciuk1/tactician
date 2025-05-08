@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bjdhm65rdruo2"]
 
 [ext_resource type="Script" uid="uid://bwoqqcoychgmo" path="res://Scripts/knight_unit.gd" id="1_koufj"]
-[ext_resource type="PackedScene" uid="uid://dou5xb1aufjfs" path="res://nodes/Units/hitbox.tscn" id="2_e3s80"]
+[ext_resource type="PackedScene" uid="uid://dou5xb1aufjfs" path="res://Nodes/Units/hitbox.tscn" id="2_e3s80"]
 [ext_resource type="Texture2D" uid="uid://cl5qjdvd2ag8c" path="res://Assets/Placeholder/Art/knight-sprite.png" id="3_koufj"]
-[ext_resource type="PackedScene" uid="uid://dvb5tahn2q5dj" path="res://nodes/UI/HealthBar.tscn" id="4_e3s80"]
+[ext_resource type="PackedScene" path="res://nodes/UI/HealthBar.tscn" id="4_e3s80"]
 
 [node name="Knight_Unit" type="Node2D"]
 script = ExtResource("1_koufj")
