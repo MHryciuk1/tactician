@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=4 uid="uid://dtmb83d7ixnbf"]
 
 [ext_resource type="Script" uid="uid://c5rhyur4xs6uf" path="res://Scripts/logic_manager.gd" id="1_8m837"]
-
+[ext_resource type="Script" uid="uid://cq6xfied52tag" path="res://Scripts/level_test.gd" id="1_45dpy"]
 [ext_resource type="PackedScene" uid="uid://bjdhm65rdruo2" path="res://Nodes/Units/Knight_Unit.tscn" id="2_5jfdo"]
 [ext_resource type="PackedScene" uid="uid://iclbvx22a456" path="res://Nodes/Units/archer_unit.tscn" id="2_18wxx"]
 [ext_resource type="PackedScene" uid="uid://dn76l7tnyncxh" path="res://Nodes/UI/hex_grid.tscn" id="2_45dpy"]

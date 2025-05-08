@@ -80,12 +80,22 @@ func init(hex_grid_ref : Hex_Grid, ui_ref : UIManager, containers : Array, name 
 	current_player = turn_start + 1
 	if(current_player == 1):
 		ui.open_placement_pannel()
-	
-func do_effect(source_unit: Node, effect_function:Callable, targets: Array) -> void:
-	for target in targets:
-		effect_function.call( target)
+@rpc()
+func effect_request(source_unique_id : int, target_unique_id : Array[int], move_name : String) -> void:
+	pass
+func do_effect(source_unit: Unit, effect_name : String, targets: Array) -> void:
+	var target_ids : Array[int] = []
+	for i in targets:
+		target_ids.append(i.unique_id)
+	effect_request.rpc(source_unit.unique_id, target_ids, effect_name )
 	$attacksound.play()
 	# other stuff needs to happen here? like ui updates or something
+@rpc("authority", "call_remote", "unreliable_ordered")
+func game_over(i_won : bool) -> void:
+	if i_won:
+		print("i win")
+	else:
+		print("i lost")
 @rpc()
 func move_request(source : int, target : Vector2i) -> void:
 	pass
@@ -94,13 +104,17 @@ func update_unit(update : Dictionary) -> void :
 	if (!unit):
 		print("unit does not exist")
 		return
-		unit.stats = update.stats
-		unit.current_cord = update.pos
+	unit.stats = update.stats
 	
+	unit._update_bar()
 	unit.moves = update.moves
 	if(update.pos != unit.current_cord):
 		hex_grid.get_cell_data(unit.current_cord)[hex_grid.CELL_OCCUPANT] = null
 		hex_grid.set_node_location(unit, update.pos)
+	if(!update.alive):
+		unique_id_to_unit.erase(update.unique_id)
+		hex_grid.clear_hex(unit.current_cord)
+		
 @rpc("authority","call_remote","unreliable_ordered")
 func unit_update(update : Array[Dictionary]) -> void:
 	print(str("unit_update ", player_name, update))
