@@ -30,13 +30,13 @@ text = "Instructions"
 layout_mode = 2
 text = "Quit"
 
-[node name="Instructions" type="TextEdit" parent="."]
+[node name="Instructions" type="RichTextLabel" parent="."]
 visible = false
 layout_mode = 0
 offset_top = -5.0
 offset_right = 1000.0
-offset_bottom = 995.0
-theme_override_font_sizes/font_size = 18
+offset_bottom = 644.0
+scale = Vector2(1.00234, 1)
 text = "Tactician is a 2D strategy game that takes place on a battlefield between two armies. Your army, which consists of 
 several units placed in the beginning of the game, can only see so far into the fog of war that dominates the map.
 You must use your units wisely to take space on the board and eliminate the enemy.
