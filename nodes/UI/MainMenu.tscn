@@ -37,17 +37,56 @@ text = "Quit"
 [node name="Instructions" type="TextEdit" parent="."]
 visible = false
 layout_mode = 0
+offset_top = -5.0
 offset_right = 1000.0
-offset_bottom = 1000.0
-text = "instructions go here"
-placeholder_text = "test"
+offset_bottom = 995.0
+theme_override_font_sizes/font_size = 18
+text = "Tactician is a 2D strategy game that takes place on a battlefield between two armies. Your army, which consists of 
+several units placed in the beginning of the game, can only see so far into the fog of war that dominates the map.
+You must use your units wisely to take space on the board and eliminate the enemy.
+
+The game progresses in a turn system, where every turn the player can move their units and use their units’ 
+abilities. There are three units:
+
+Knight - the most basic unit, with average stats and a decent normal attack
+Archer - a ranged unit, with the ability to attack units far away
+Scout - a fast but weak unit, with the ability to see far into the fog of war
+
+Unit statistics:
+Cost: How many energy points the unit costs to play
+HP: Number of health points the unit has. They can take this much damage before dying
+Movement range: How far the unit can travel on each turn
+Attack Range: The unit can attack enemies this many spaces away
+Damage: Each attack from the unit will deal this much damage to the target
+Vision Range: How far the unit can see into the fog of war
+
+
+How to Play:
+
+In the beginning of the game, players use their energy to place units on the board, setting a basis for the rest of
+the game. Each player has the same amount of energy, and can choose whatever combination of units they want. After both players place their units, the game starts.
+
+During each turn, the player can click on any given hex to get its information. By clicking on an ally unit, they can
+see where it can move and any targets it can attack. Players can then select attacks, see their description, and
+choose to use them. They can also move the unit to a new location, using the units movement resource, which
+resets at the end of the turn. Players can end their turn by clicking the ‘End Turn’ button.
+
+The game ends when one player is out of units. Good luck!
+"
 
 [node name="Button" type="Button" parent="Instructions"]
-layout_mode = 0
-offset_left = 500.0
-offset_top = 900.0
-offset_right = 600.0
-offset_bottom = 970.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -55.0
+offset_right = 50.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
 text = "Done"
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]

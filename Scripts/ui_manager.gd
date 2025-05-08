@@ -9,6 +9,7 @@ class_name UIManager
 @onready var confirm_container :PanelContainer = $Confirm_Container
 @onready var confirm_container_progress : Label = $Confirm_Container/HBoxContainer/Progress
 @onready var unit_placement : PanelContainer = $Unit_Placement_Panel
+@onready var turn_pop_up = $TurnPopUp
 var selection_mode_on : bool = false
 var curr_targets : Array = []
 var curr_move : Dictionary
@@ -108,6 +109,12 @@ func cancel_selection_mode():
 	confirm_container.hide()
 	selection_mode_on = false
 
+func update_turn_pop_up_display(turn_number: int):
+	turn_pop_up.get_child(0).text   = "Your Turn:\nTurn %d"     % turn_number
+func show_turn_pop_up():
+	turn_pop_up.show()
+func hide_turn_pop_up():
+	turn_pop_up.hide()
 
 func _on_end_turn_button_pressed() -> void:
 	lm.turn_end()

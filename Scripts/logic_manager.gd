@@ -62,9 +62,14 @@ func set_up_response(res) -> void:
 @rpc("authority","call_remote","unreliable_ordered")
 func turn_start() -> void:
 	print(str("turn start ", player_name))
+	ui.update_turn_pop_up_display(turn_number)
+	ui.show_turn_pop_up()
+	await get_tree().create_timer(1).timeout
+	ui.hide_turn_pop_up()
 	current_player = 1
 	actions_enabled = true
 	ui.open_turn_pannel()
+
 	#print(current_player)
 	
 	
