@@ -109,6 +109,10 @@ func update_unit(update : Dictionary) -> void :
 	unit._update_bar()
 	unit.moves = update.moves
 	if(update.pos != unit.current_cord):
+		unit.current_cord = update.pos
+		if ui.move_source == unit:
+			var valid_moves = hex_grid.get_valid_spaces(unit.current_cord, unit.get_stats().attack_range,false)
+			hex_grid.highlight_hexes(valid_moves, Color.BLUE)
 		hex_grid.get_cell_data(unit.current_cord)[hex_grid.CELL_OCCUPANT] = null
 		hex_grid.set_node_location(unit, update.pos)
 	if(!update.alive):
