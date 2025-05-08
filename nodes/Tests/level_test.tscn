@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dxk5qf2akgabk" path="res://Scripts/ui_manager.gd" id="5_t1dee"]
 [ext_resource type="AudioStream" uid="uid://cqy07n6ku0oxi" path="res://Assets/Placeholder/SFX/sword-sound.wav" id="9_evvim"]
 [ext_resource type="AudioStream" uid="uid://bwapw7d1ksck4" path="res://Assets/Placeholder/SFX/bleh.wav" id="10_e1i7i"]
+[ext_resource type="AudioStream" uid="uid://chsufhpr3m7fg" path="res://Assets/Placeholder/SFX/BackgroundMusic.wav" id="11_e1i7i"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_35r2b")
@@ -138,6 +139,12 @@ text = "Archer"
 layout_mode = 2
 text = "Finish Placement"
 
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_e1i7i")
+volume_db = -30.0
+autoplay = true
+
 [node name="EndScreen" type="Panel" parent="UI"]
 visible = false
 anchors_preset = 15
@@ -195,6 +202,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Your Turn:
 Turn 1"
+
 
 [connection signal="cell_left_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_left_clicked"]
 [connection signal="cell_right_clicked" from="Hex_Grid" to="." method="_on_hex_grid_cell_right_clicked"]
