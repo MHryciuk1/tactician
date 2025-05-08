@@ -5,8 +5,11 @@ class_name UIManager
 @onready var turn_label      : Label  = $TurnPanel/VBoxContainer/TurnLabel
 @onready var player_label    : Label  = $TurnPanel/VBoxContainer/PlayerLabel
 @onready var end_turn_button : Button = $TurnPanel/VBoxContainer/EndTurnButton
+@onready var turn_panel : PanelContainer =$TurnPanel
 @onready var confirm_container :PanelContainer = $Confirm_Container
 @onready var confirm_container_progress : Label = $Confirm_Container/HBoxContainer/Progress
+@onready var unit_placement : PanelContainer = $Unit_Placement_Panel
+@onready var turn_pop_up = $TurnPopUp
 var selection_mode_on : bool = false
 var curr_targets : Array = []
 var curr_move : Dictionary
@@ -15,6 +18,14 @@ var move_source : Unit
 
 var lm: Logic_Manager
 var grid : Hex_Grid
+func open_turn_pannel() -> void:
+	turn_panel.show()
+func close_placement_pannel() -> void:
+	unit_placement.hide()
+	#turn_panel.show()
+func open_placement_pannel() -> void:
+	unit_placement.show()
+	
 func init(logic_manager, hex_grid)->void:
 	lm = logic_manager
 	grid = hex_grid
@@ -98,6 +109,12 @@ func cancel_selection_mode():
 	confirm_container.hide()
 	selection_mode_on = false
 
+func update_turn_pop_up_display(turn_number: int):
+	turn_pop_up.get_child(0).text   = "Your Turn:\nTurn %d"     % turn_number
+func show_turn_pop_up():
+	turn_pop_up.show()
+func hide_turn_pop_up():
+	turn_pop_up.hide()
 
 func _on_end_turn_button_pressed() -> void:
 	lm.turn_end()
@@ -106,7 +123,7 @@ func _on_confirm_pressed() -> void:
 	print(curr_targets)
 	if(curr_targets.size() >= curr_move.min_targets):
 		print("doing move")
-		lm.do_effect(move_source, curr_move.function, curr_targets)
+		lm.do_effect(move_source, curr_move.name, curr_targets)
 		curr_move.uses_left -=1
 		cancel_selection_mode()
 

@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=3 uid="uid://bu4f2fukishdv"]
+
+[ext_resource type="Script" uid="uid://1rtyfkmxe57v" path="res://Scripts/client.gd" id="1_ldu3b"]
+[ext_resource type="PackedScene" uid="uid://dtmb83d7ixnbf" path="res://Nodes/Tests/level_test.tscn" id="2_4v2eb"]
+[ext_resource type="PackedScene" uid="uid://bw4ha2qrxggsy" path="res://Nodes/UI/MainMenu.tscn" id="3_5cpbq"]
+
+[node name="Peer" type="Node"]
+script = ExtResource("1_ldu3b")
+level_scene = ExtResource("2_4v2eb")
+
+[node name="Connection_Menu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Connection_Menu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Address" type="LineEdit" parent="Connection_Menu/VBoxContainer"]
+layout_mode = 2
+text = "127.0.0.1"
+placeholder_text = "Type in ip address"
+
+[node name="Button" type="Button" parent="Connection_Menu/VBoxContainer"]
+layout_mode = 2
+text = "Connect"
+
+[node name="MainMenu" parent="." instance=ExtResource("3_5cpbq")]
+
+[node name="EndScreen" type="Panel" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="EndScreen"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 372.0
+offset_top = -180.0
+offset_right = -328.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "You Win!"
+
+[node name="Button" type="Button" parent="EndScreen"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -80.0
+offset_right = 44.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Play Again"
+
+[node name="TurnPopUp" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 170.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="TurnPopUp"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Your Turn:
+Turn 1"
+
+[connection signal="pressed" from="Connection_Menu/VBoxContainer/Button" to="." method="_on_button_pressed"]
